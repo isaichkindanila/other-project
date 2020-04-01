@@ -12,6 +12,7 @@ import ru.itis.other.project.repositories.UserRepository;
 import ru.itis.other.project.services.SignUpService;
 import ru.itis.other.project.services.TokenGeneratorService;
 import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
+import ru.itis.other.project.util.exceptions.TokenNotFoundException;
 
 @Service
 @AllArgsConstructor
@@ -41,5 +42,28 @@ class SignUpServiceImpl implements SignUpService {
                 .build());
 
         return new SignUpTokenDto(token.getToken());
+    }
+
+    @Override
+    public boolean confirm(String token) {
+        SignUpToken signUpToken = tokenRepository.find(token).orElseThrow(TokenNotFoundException::new);
+
+        if (signUpToken.getState() == SignUpToken.State.NOT_USED) {
+            User user = signUpToken.getUser();
+
+            if (user.getState() != User.State.NOT_CONFIRMED) {
+                return false;
+            }
+
+            user.setState(User.State.OK);
+            userRepository.save(user);
+
+            signUpToken.setState(SignUpToken.State.USED);
+            tokenRepository.save(signUpToken);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

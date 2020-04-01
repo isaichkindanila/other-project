@@ -17,7 +17,7 @@ public class SignUpToken {
     @Id
     private String token;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

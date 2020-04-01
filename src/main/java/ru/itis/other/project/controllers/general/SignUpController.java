@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.itis.other.project.dto.SignUpDto;
 import ru.itis.other.project.services.AuthService;
 import ru.itis.other.project.services.SignUpService;
@@ -41,6 +38,15 @@ public class SignUpController {
             return "signed_up";
         } catch (EmailAlreadyTakenException e) {
             return "redirect:/signUp?error";
+        }
+    }
+
+    @GetMapping("/confirm/{token}")
+    public String confirm(@PathVariable String token) {
+        if (signUpService.confirm(token)) {
+            return "sign_up_confirmed";
+        } else {
+            return "redirect:/home";
         }
     }
 }

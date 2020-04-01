@@ -1,8 +1,9 @@
 package ru.itis.other.project.services.impl;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,16 +16,20 @@ import ru.itis.other.project.services.JwtService;
 @Service
 class JwtServiceImpl implements JwtService {
 
-    @Value("${jwt.secret}")
-    private String secret;
+    private final Algorithm algorithm;
+    private final JWTVerifier verifier;
+
+    public JwtServiceImpl(@Value("${jwt.secret}") String secret) {
+        algorithm = Algorithm.HMAC256(secret);
+        verifier = JWT.require(algorithm).build();
+    }
 
     @Override
     public JwtDto generateJWT(User user) {
-        String token = Jwts.builder()
-                .setSubject(user.getId().toString())
-                .claim("email", user.getEmail())
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
+        String token = JWT.create()
+                .withSubject(user.getId().toString())
+                .withClaim("email", user.getEmail())
+                .sign(algorithm);
 
         return new JwtDto(token);
     }
@@ -32,14 +37,11 @@ class JwtServiceImpl implements JwtService {
     @Override
     public UserDetails parseToken(String token) {
         try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
-                    .getBody();
+            DecodedJWT jwt = verifier.verify(token);
 
             return UserDetailsImpl.builder()
-                    .id(Long.parseLong(claims.getSubject()))
-                    .email(claims.get("email", String.class))
+                    .id(Long.parseLong(jwt.getSubject()))
+                    .email(jwt.getClaim("email").asString())
                     .state(User.State.OK)
                     .build();
         } catch (Exception e) {

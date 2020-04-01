@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -16,15 +18,26 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import javax.sql.DataSource;
+import java.util.Properties;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 // conflicts with Freemarker's `Configuration` class
 @org.springframework.context.annotation.Configuration
 @PropertySource("classpath:application.properties")
 @EnableWebMvc
+@EnableAspectJAutoProxy
 @AllArgsConstructor
 public class AppConfig {
 
     private final Environment env;
+
+    @Bean
+    @SuppressWarnings("ConstantConditions")
+    public Executor executor() {
+        int threads = Integer.parseInt(env.getProperty("executor.threads"));
+        return Executors.newFixedThreadPool(threads);
+    }
 
     @Bean
     public MultipartResolver multipartResolver() {
@@ -69,5 +82,23 @@ public class AppConfig {
     @Bean
     public ViewResolver freemarkerViewResolver() {
         return new FreeMarkerViewResolver("/view/", ".ftl");
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        Properties mailProperties = new Properties();
+
+        mailProperties.setProperty("mail.smtp.auth", env.getRequiredProperty("mail.smtp.auth"));
+        mailProperties.setProperty("mail.smtp.starttls.enable", env.getRequiredProperty("mail.smtp.starttls.enable"));
+
+        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+
+        sender.setJavaMailProperties(mailProperties);
+        sender.setHost(env.getRequiredProperty("mail.host"));
+        sender.setPort(Integer.parseInt(env.getRequiredProperty("mail.port")));
+        sender.setUsername(env.getRequiredProperty("mail.username"));
+        sender.setPassword(env.getRequiredProperty("mail.password"));
+
+        return sender;
     }
 }

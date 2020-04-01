@@ -25,6 +25,7 @@ public class MailServiceImpl implements MailService {
 
         helper.setSubject(subject);
         helper.setText(html, true);
+        helper.setTo(address);
 
         executor.execute(() -> mailSender.send(message));
     }

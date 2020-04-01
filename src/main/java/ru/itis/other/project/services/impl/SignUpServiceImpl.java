@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.dto.SignUpDto;
+import ru.itis.other.project.dto.SignUpTokenDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.repositories.UserRepository;
 import ru.itis.other.project.services.SignUpService;
@@ -17,7 +18,7 @@ class SignUpServiceImpl implements SignUpService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUp(SignUpDto dto) {
+    public SignUpTokenDto signUp(SignUpDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException(dto.getEmail());
         }
@@ -29,5 +30,8 @@ class SignUpServiceImpl implements SignUpService {
                 .build();
 
         userRepository.save(user);
+
+        // TODO: create and persist token
+        return new SignUpTokenDto("");
     }
 }

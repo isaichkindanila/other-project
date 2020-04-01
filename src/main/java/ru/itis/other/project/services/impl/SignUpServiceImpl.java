@@ -5,16 +5,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.dto.SignUpDto;
 import ru.itis.other.project.dto.SignUpTokenDto;
+import ru.itis.other.project.models.SignUpToken;
 import ru.itis.other.project.models.User;
+import ru.itis.other.project.repositories.SignUpTokenRepository;
 import ru.itis.other.project.repositories.UserRepository;
 import ru.itis.other.project.services.SignUpService;
+import ru.itis.other.project.services.TokenGeneratorService;
 import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
 
 @Service
 @AllArgsConstructor
 class SignUpServiceImpl implements SignUpService {
 
+    private final SignUpTokenRepository tokenRepository;
     private final UserRepository userRepository;
+    private final TokenGeneratorService tokenGeneratorService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -23,15 +28,18 @@ class SignUpServiceImpl implements SignUpService {
             throw new EmailAlreadyTakenException(dto.getEmail());
         }
 
-        User user = User.builder()
+        User user = userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .passHash(passwordEncoder.encode(dto.getPassword()))
                 .state(User.State.NOT_CONFIRMED)
-                .build();
+                .build());
 
-        userRepository.save(user);
+        SignUpToken token = tokenRepository.save(SignUpToken.builder()
+                .token(tokenGeneratorService.generateToken(60))
+                .user(user)
+                .state(SignUpToken.State.NOT_USED)
+                .build());
 
-        // TODO: create and persist token
-        return new SignUpTokenDto("");
+        return new SignUpTokenDto(token.getToken());
     }
 }

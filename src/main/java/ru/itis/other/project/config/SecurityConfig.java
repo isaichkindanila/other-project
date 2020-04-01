@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
@@ -26,6 +27,11 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PersistentTokenRepository tokenRepository() {
+        return new InMemoryTokenRepositoryImpl();
     }
 
     @Configuration
@@ -62,12 +68,12 @@ public class SecurityConfig {
 
     @Configuration
     @Order(1)
+    @AllArgsConstructor
     public static class GeneralConfig extends WebSecurityConfigurerAdapter {
 
-        @Bean
-        public PersistentTokenRepository tokenRepository() {
-            return new InMemoryTokenRepositoryImpl();
-        }
+        private final UserDetailsService userDetailsService;
+        private final PasswordEncoder passwordEncoder;
+        private final PersistentTokenRepository tokenRepository;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -79,12 +85,12 @@ public class SecurityConfig {
 
             http.rememberMe()
                     .alwaysRemember(true)
-                    .tokenRepository(tokenRepository());
+                    .tokenRepository(tokenRepository);
         }
 
         @Override
-        protected void configure(AuthenticationManagerBuilder auth) {
-
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         }
     }
 }

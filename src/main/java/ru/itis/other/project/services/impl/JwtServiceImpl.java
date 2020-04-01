@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.itis.other.project.dto.JwtDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.security.details.UserDetailsImpl;
 import ru.itis.other.project.services.JwtService;
@@ -18,12 +19,14 @@ class JwtServiceImpl implements JwtService {
     private String secret;
 
     @Override
-    public String getToken(User user) {
-        return Jwts.builder()
+    public JwtDto generateJWT(User user) {
+        String token = Jwts.builder()
                 .setSubject(user.getId().toString())
                 .claim("email", user.getEmail())
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
+
+        return new JwtDto(token);
     }
 
     @Override

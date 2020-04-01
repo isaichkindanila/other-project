@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
-import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.filter.GenericFilterBean;
 
 @Configuration
@@ -27,11 +25,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public PersistentTokenRepository tokenRepository() {
-        return new InMemoryTokenRepositoryImpl();
     }
 
     @Configuration
@@ -73,7 +66,6 @@ public class SecurityConfig {
 
         private final UserDetailsService userDetailsService;
         private final PasswordEncoder passwordEncoder;
-        private final PersistentTokenRepository tokenRepository;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -88,10 +80,6 @@ public class SecurityConfig {
             http.logout()
                     .logoutUrl("/signOut")
                     .permitAll();
-
-            http.rememberMe()
-                    .alwaysRemember(true)
-                    .tokenRepository(tokenRepository);
         }
 
         @Override

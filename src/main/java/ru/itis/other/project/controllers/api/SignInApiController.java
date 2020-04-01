@@ -13,7 +13,7 @@ import ru.itis.other.project.services.SignInService;
 @RestController
 @RequestMapping("/api/signIn")
 @AllArgsConstructor
-public class SignInController {
+public class SignInApiController {
 
     private final SignInService signInService;
     private final JwtService jwtService;

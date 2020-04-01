@@ -14,7 +14,7 @@ import ru.itis.other.project.services.SignUpService;
 @RestController
 @RequestMapping("/api/signUp")
 @AllArgsConstructor
-public class SignUpController {
+public class SignUpApiController {
 
     private final SignUpService signUpService;
 

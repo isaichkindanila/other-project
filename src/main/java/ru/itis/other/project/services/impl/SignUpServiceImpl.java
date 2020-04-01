@@ -17,7 +17,7 @@ class SignUpServiceImpl implements SignUpService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUp(SignUpDto dto) throws EmailAlreadyTakenException {
+    public void signUp(SignUpDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException(dto.getEmail());
         }

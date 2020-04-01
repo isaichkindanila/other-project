@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.other.project.dto.SignUpDto;
 import ru.itis.other.project.services.SignUpService;
-import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
 
 @RestController
 @RequestMapping("/api/signUp")
@@ -22,11 +21,8 @@ public class SignUpController {
     @PostMapping
     @PreAuthorize("permitAll()")
     public ResponseEntity<?> signUp(@RequestBody SignUpDto dto) {
-        try {
-            signUpService.signUp(dto);
-            return ResponseEntity.noContent().build();
-        } catch (EmailAlreadyTakenException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        signUpService.signUp(dto);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

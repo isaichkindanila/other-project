@@ -47,17 +47,17 @@ public class SecurityConfig {
             // this configuration should only be used for API requests
             http.antMatcher("/api/**");
 
-            // sessions should be disabled for API
-            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-            // token filter should be placed BEFORE anonymous filter to allow anonymous requests
-            http.addFilterBefore(jwtAuthFilter, AnonymousAuthenticationFilter.class);
-
             // CSRF protection and default auth methods are useless
             http.csrf().disable();
             http.httpBasic().disable();
             http.formLogin().disable();
             http.logout().disable();
+
+            // sessions should be disabled for API
+            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+            // token filter should be placed BEFORE anonymous filter to allow anonymous requests
+            http.addFilterBefore(jwtAuthFilter, AnonymousAuthenticationFilter.class);
         }
 
         @Override
@@ -77,11 +77,17 @@ public class SecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            // to use permitAll()
+            http.authorizeRequests();
+
             http.formLogin()
                     .loginPage("/signIn")
-                    .usernameParameter("email");
+                    .usernameParameter("email")
+                    .permitAll();
 
-            http.logout().logoutUrl("/signOut");
+            http.logout()
+                    .logoutUrl("/signOut")
+                    .permitAll();
 
             http.rememberMe()
                     .alwaysRemember(true)

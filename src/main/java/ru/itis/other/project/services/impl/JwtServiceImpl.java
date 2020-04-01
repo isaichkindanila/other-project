@@ -12,7 +12,7 @@ import ru.itis.other.project.security.details.UserDetailsImpl;
 import ru.itis.other.project.services.JwtService;
 
 @Service
-public class JwtServiceImpl implements JwtService {
+class JwtServiceImpl implements JwtService {
 
     @Value("${jwt.secret}")
     private String secret;

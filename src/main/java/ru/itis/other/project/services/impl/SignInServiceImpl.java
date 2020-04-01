@@ -19,7 +19,7 @@ class SignInServiceImpl implements SignInService {
     @Override
     public User signIn(SignInDto dto) throws AccessDeniedException {
         User user = userRepository.findByEmail(dto.getEmail()).orElseThrow(
-                () -> new AccessDeniedException("wrong email")
+                () -> new AccessDeniedException("bad credentials")
         );
 
         if (user.getState() != User.State.OK) {
@@ -27,7 +27,7 @@ class SignInServiceImpl implements SignInService {
         }
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassHash())) {
-            throw new AccessDeniedException("wrong password");
+            throw new AccessDeniedException("bad credentials");
         }
 
         return user;

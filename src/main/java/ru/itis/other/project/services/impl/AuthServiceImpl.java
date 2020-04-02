@@ -1,7 +1,6 @@
 package ru.itis.other.project.services.impl;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.services.AuthService;
@@ -12,8 +11,7 @@ class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean isAuthenticated() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         return !(auth instanceof AnonymousAuthenticationToken);
     }
 

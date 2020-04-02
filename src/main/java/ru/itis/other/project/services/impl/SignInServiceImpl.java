@@ -18,7 +18,7 @@ class SignInServiceImpl implements SignInService {
 
     @Override
     public User signIn(SignInDto dto) throws AccessDeniedException {
-        User user = userRepository.findByEmail(dto.getEmail()).orElseThrow(
+        var user = userRepository.findByEmail(dto.getEmail()).orElseThrow(
                 () -> new AccessDeniedException("bad credentials")
         );
 

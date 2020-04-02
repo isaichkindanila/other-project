@@ -8,7 +8,6 @@ import ru.itis.other.project.repositories.UserRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 @Repository
@@ -23,7 +22,7 @@ class UserRepositoryJpaImpl implements UserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        TypedQuery<User> query = entityManager.createQuery(FIND_EMAIL, User.class);
+        var query = entityManager.createQuery(FIND_EMAIL, User.class);
         query.setParameter("email", email);
 
         try {

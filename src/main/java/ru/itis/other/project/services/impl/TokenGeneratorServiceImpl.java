@@ -14,12 +14,12 @@ public class TokenGeneratorServiceImpl implements TokenGeneratorService {
 
     @Override
     public String generateToken(int length) {
-        byte[] bytes = (length % 4 == 0)
+        var bytes = (length % 4 == 0)
                 ? new byte[3 * length / 4]
                 : new byte[3 * (1 + length / 4)];
 
         random.nextBytes(bytes);
-        String token = encoder.encodeToString(bytes);
+        var token = encoder.encodeToString(bytes);
 
         return token.substring(0, length);
     }

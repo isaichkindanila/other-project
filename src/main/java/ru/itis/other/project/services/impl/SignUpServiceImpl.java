@@ -24,7 +24,7 @@ class SignUpServiceImpl implements SignUpService {
             throw new EmailAlreadyTakenException(dto.getEmail());
         }
 
-        User user = userRepository.save(User.builder()
+        var user = userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .passHash(passwordEncoder.encode(dto.getPassword()))
                 .state(User.State.NOT_CONFIRMED)

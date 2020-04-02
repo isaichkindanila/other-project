@@ -1,6 +1,5 @@
 package ru.itis.other.project.security.filters;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
@@ -18,9 +17,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = ((HttpServletRequest) request).getHeader("Authorization");
+        var token = ((HttpServletRequest) request).getHeader("Authorization");
 
-        Authentication auth = (token == null) ? null : new JwtAuthentication(token);
+        var auth = (token == null) ? null : new JwtAuthentication(token);
 
         SecurityContextHolder.getContext().setAuthentication(auth);
         chain.doFilter(request, response);

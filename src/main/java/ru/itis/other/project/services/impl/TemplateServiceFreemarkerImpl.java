@@ -1,7 +1,6 @@
 package ru.itis.other.project.services.impl;
 
 import freemarker.template.Configuration;
-import freemarker.template.Template;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ class TemplateServiceFreemarkerImpl implements TemplateService {
     @Override
     @SneakyThrows
     public String process(String templateName, Map<String, ?> modelMap) {
-        Template template = configuration.getTemplate(templateName + ".ftl");
+        var template = configuration.getTemplate(templateName + ".ftl");
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, modelMap);
     }
 }

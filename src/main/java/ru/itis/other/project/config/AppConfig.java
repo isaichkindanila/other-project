@@ -47,7 +47,7 @@ public class AppConfig {
 
     @Bean
     public DataSource hikariDataSource() {
-        HikariConfig config = new HikariConfig();
+        var config = new HikariConfig();
 
         config.setJdbcUrl(env.getRequiredProperty("db.url"));
         config.setUsername(env.getRequiredProperty("db.username"));
@@ -64,7 +64,7 @@ public class AppConfig {
 
     @Bean
     public Configuration freemarkerConfiguration() {
-        Configuration configuration = new Configuration(Configuration.VERSION_2_3_29);
+        var configuration = new Configuration(Configuration.VERSION_2_3_29);
 
         configuration.setClassForTemplateLoading(getClass(), "/templates");
         configuration.setDefaultEncoding("UTF-8");
@@ -74,7 +74,7 @@ public class AppConfig {
 
     @Bean
     public FreeMarkerConfigurer freemarkerConfigurer() {
-        FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
+        var configurer = new FreeMarkerConfigurer();
         configurer.setConfiguration(freemarkerConfiguration());
 
         return configurer;
@@ -87,12 +87,12 @@ public class AppConfig {
 
     @Bean
     public JavaMailSender javaMailSender() {
-        Properties mailProperties = new Properties();
+        var mailProperties = new Properties();
 
         mailProperties.setProperty("mail.smtp.auth", env.getRequiredProperty("mail.smtp.auth"));
         mailProperties.setProperty("mail.smtp.starttls.enable", env.getRequiredProperty("mail.smtp.starttls.enable"));
 
-        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+        var sender = new JavaMailSenderImpl();
 
         sender.setJavaMailProperties(mailProperties);
         sender.setHost(env.getRequiredProperty("mail.host"));

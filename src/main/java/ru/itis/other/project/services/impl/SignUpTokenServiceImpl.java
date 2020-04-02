@@ -25,7 +25,7 @@ public class SignUpTokenServiceImpl implements SignUpTokenService {
 
     @Override
     public SignUpTokenDto createTokenFor(User user) {
-        SignUpToken token = tokenRepository.save(SignUpToken.builder()
+        var token = tokenRepository.save(SignUpToken.builder()
                 .token(generatorService.generateToken(tokenLength))
                 .user(user)
                 .state(SignUpToken.State.NOT_USED)
@@ -36,12 +36,12 @@ public class SignUpTokenServiceImpl implements SignUpTokenService {
 
     @Override
     public boolean confirm(String token) {
-        SignUpToken signUpToken = tokenRepository.find(token).orElseThrow(
+        var signUpToken = tokenRepository.find(token).orElseThrow(
                 () -> new TokenNotFoundException(token)
         );
 
         if (signUpToken.getState() == SignUpToken.State.NOT_USED) {
-            User user = signUpToken.getUser();
+            var user = signUpToken.getUser();
 
             if (user.getState() != User.State.NOT_CONFIRMED) {
                 return false;

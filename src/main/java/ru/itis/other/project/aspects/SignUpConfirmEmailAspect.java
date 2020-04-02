@@ -10,7 +10,6 @@ import ru.itis.other.project.models.User;
 import ru.itis.other.project.services.MailService;
 import ru.itis.other.project.services.TemplateService;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Aspect
@@ -30,11 +29,13 @@ public class SignUpConfirmEmailAspect {
             argNames = "token,user"
     )
     public void sendConformationEmail(SignUpTokenDto token, User user) {
-        Map<String, Object> modelMap = new HashMap<>();
-        modelMap.put("serverURL", serverURL);
-        modelMap.put("token", token.getToken());
+        var modelMap = Map.of(
+                "serverURL", serverURL,
+                "token", token.getToken()
+        );
 
-        String html = templateService.process("email/confirm_sign_up", modelMap);
+        var html = templateService.process("email/confirm_sign_up", modelMap);
+
         mailService.send(user.getEmail(), "Email conformation", html);
     }
 }

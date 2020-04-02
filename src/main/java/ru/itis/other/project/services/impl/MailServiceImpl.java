@@ -7,7 +7,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.services.MailService;
 
-import javax.mail.internet.MimeMessage;
 import java.util.concurrent.Executor;
 
 @Service
@@ -20,8 +19,8 @@ public class MailServiceImpl implements MailService {
     @Override
     @SneakyThrows
     public void send(String address, String subject, String html) {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
+        var message = mailSender.createMimeMessage();
+        var helper = new MimeMessageHelper(message);
 
         helper.setSubject(subject);
         helper.setText(html, true);

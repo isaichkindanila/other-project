@@ -9,15 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+@Setter
 @RequiredArgsConstructor
 public class JwtAuthentication implements Authentication {
 
     private final String token;
 
-    @Setter
     private boolean isAuthenticated = false;
-
-    @Setter
     private UserDetails userDetails;
 
     @Override

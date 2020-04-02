@@ -13,10 +13,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -78,11 +76,6 @@ public class AppConfig {
         configurer.setConfiguration(freemarkerConfiguration());
 
         return configurer;
-    }
-
-    @Bean
-    public ViewResolver freemarkerViewResolver() {
-        return new FreeMarkerViewResolver("/view/", ".ftl");
     }
 
     @Bean

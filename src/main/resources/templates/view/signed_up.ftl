@@ -1,12 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Signed up</title>
-</head>
-<body>
-<h1>Signed up, confirm your email</h1>
-</body>
-</html>
+<#import "lib/html.ftl" as H>
+<@H.html>
+    <@H.head "Signed up"/>
+    <@H.body>
+        <h1>Signed up, confirm your email</h1>
+    </@H.body>
+</@H.html>

@@ -36,7 +36,7 @@ public class SignUpApiController {
         if (signUpTokenService.confirm(dto.getToken())) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ApiErrorResponse(HttpStatus.CONFLICT, "token already used").toResponseEntity();
+            return new ApiErrorResponse(HttpStatus.CONFLICT, "token already used", dto).toResponseEntity();
         }
     }
 }

@@ -8,16 +8,19 @@ import org.springframework.http.ResponseEntity;
 @Getter
 @ToString
 public class ApiErrorResponse {
+
     private final int status;
     private final String reason;
+    private final Object data;
 
-    public ApiErrorResponse(HttpStatus status, String reason) {
+    public ApiErrorResponse(HttpStatus status, String reason, Object data) {
         this.status = status.value();
         this.reason = reason;
+        this.data = data;
     }
 
-    public ApiErrorResponse(HttpStatus status, Exception exception) {
-        this(status, exception.getMessage());
+    public ApiErrorResponse(HttpStatus status, String reason) {
+        this(status, reason, new Object());
     }
 
     public ResponseEntity<ApiErrorResponse> toResponseEntity() {

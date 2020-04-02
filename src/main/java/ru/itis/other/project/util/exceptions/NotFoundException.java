@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Generates {@code 404 NOT FOUND} error response
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public abstract class NotFoundException extends RuntimeException {
+public abstract class NotFoundException extends ResponseException {
+
+    public NotFoundException(String message, Object data) {
+        super(HttpStatus.NOT_FOUND, message, data);
+    }
 
     public NotFoundException(String message) {
-        super(message);
+        super(HttpStatus.NOT_FOUND, message);
     }
 }

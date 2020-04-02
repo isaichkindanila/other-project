@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.itis.other.project.dto.SignUpDto;
 import ru.itis.other.project.services.AuthService;
 import ru.itis.other.project.services.SignUpService;
+import ru.itis.other.project.services.SignUpTokenService;
 import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
 
 @Controller
@@ -15,6 +16,7 @@ import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
 @AllArgsConstructor
 public class SignUpController {
 
+    private final SignUpTokenService signUpTokenService;
     private final SignUpService signUpService;
     private final AuthService authService;
 
@@ -43,7 +45,7 @@ public class SignUpController {
 
     @GetMapping("/confirm/{token}")
     public String confirm(@PathVariable String token) {
-        if (signUpService.confirm(token)) {
+        if (signUpTokenService.confirm(token)) {
             return "sign_up_confirmed";
         } else {
             return "redirect:/home";

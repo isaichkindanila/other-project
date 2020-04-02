@@ -5,8 +5,8 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.itis.other.project.dto.SignUpDto;
 import ru.itis.other.project.dto.SignUpTokenDto;
+import ru.itis.other.project.models.User;
 import ru.itis.other.project.services.MailService;
 import ru.itis.other.project.services.TemplateService;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class SignUpAspect {
+public class SignUpConfirmEmailAspect {
 
     private final MailService mailService;
     private final TemplateService templateService;
@@ -25,16 +25,16 @@ public class SignUpAspect {
     private String serverURL;
 
     @AfterReturning(
-            pointcut = "execution(* ru.itis.other.project.services.SignUpService.signUp(..)) && args(dto,..)",
+            pointcut = "execution(* ru.itis.other.project.services.SignUpTokenService.createTokenFor(..)) && args(user)",
             returning = "token",
-            argNames = "token,dto"
+            argNames = "token,user"
     )
-    public void sendConformationEmail(SignUpTokenDto token, SignUpDto dto) {
+    public void sendConformationEmail(SignUpTokenDto token, User user) {
         Map<String, Object> modelMap = new HashMap<>();
         modelMap.put("serverURL", serverURL);
         modelMap.put("token", token.getToken());
 
         String html = templateService.process("email/confirm_sign_up", modelMap);
-        mailService.send(dto.getEmail(), "Email conformation", html);
+        mailService.send(user.getEmail(), "Email conformation", html);
     }
 }

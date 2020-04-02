@@ -4,27 +4,22 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.dto.SignUpDto;
-import ru.itis.other.project.dto.SignUpTokenDto;
-import ru.itis.other.project.models.SignUpToken;
 import ru.itis.other.project.models.User;
-import ru.itis.other.project.repositories.SignUpTokenRepository;
 import ru.itis.other.project.repositories.UserRepository;
 import ru.itis.other.project.services.SignUpService;
-import ru.itis.other.project.services.TokenGeneratorService;
+import ru.itis.other.project.services.SignUpTokenService;
 import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
-import ru.itis.other.project.util.exceptions.TokenNotFoundException;
 
 @Service
 @AllArgsConstructor
 class SignUpServiceImpl implements SignUpService {
 
-    private final SignUpTokenRepository tokenRepository;
     private final UserRepository userRepository;
-    private final TokenGeneratorService tokenGeneratorService;
     private final PasswordEncoder passwordEncoder;
+    private final SignUpTokenService tokenService;
 
     @Override
-    public SignUpTokenDto signUp(SignUpDto dto) {
+    public void signUp(SignUpDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException(dto.getEmail());
         }
@@ -35,35 +30,6 @@ class SignUpServiceImpl implements SignUpService {
                 .state(User.State.NOT_CONFIRMED)
                 .build());
 
-        SignUpToken token = tokenRepository.save(SignUpToken.builder()
-                .token(tokenGeneratorService.generateToken(60))
-                .user(user)
-                .state(SignUpToken.State.NOT_USED)
-                .build());
-
-        return new SignUpTokenDto(token.getToken());
-    }
-
-    @Override
-    public boolean confirm(String token) {
-        SignUpToken signUpToken = tokenRepository.find(token).orElseThrow(TokenNotFoundException::new);
-
-        if (signUpToken.getState() == SignUpToken.State.NOT_USED) {
-            User user = signUpToken.getUser();
-
-            if (user.getState() != User.State.NOT_CONFIRMED) {
-                return false;
-            }
-
-            user.setState(User.State.OK);
-            userRepository.save(user);
-
-            signUpToken.setState(SignUpToken.State.USED);
-            tokenRepository.save(signUpToken);
-
-            return true;
-        } else {
-            return false;
-        }
+        tokenService.createTokenFor(user);
     }
 }

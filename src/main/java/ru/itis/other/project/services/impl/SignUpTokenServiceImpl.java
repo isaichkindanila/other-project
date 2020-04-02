@@ -36,7 +36,9 @@ public class SignUpTokenServiceImpl implements SignUpTokenService {
 
     @Override
     public boolean confirm(String token) {
-        SignUpToken signUpToken = tokenRepository.find(token).orElseThrow(TokenNotFoundException::new);
+        SignUpToken signUpToken = tokenRepository.find(token).orElseThrow(
+                () -> new TokenNotFoundException(token)
+        );
 
         if (signUpToken.getState() == SignUpToken.State.NOT_USED) {
             User user = signUpToken.getUser();

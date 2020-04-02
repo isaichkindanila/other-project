@@ -11,32 +11,34 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.itis.other.project.util.ApiErrorResponse;
 import ru.itis.other.project.util.exceptions.ConflictException;
+import ru.itis.other.project.util.exceptions.NotFoundException;
 
 @ControllerAdvice("ru.itis.other.project.controllers.api")
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private ResponseEntity<?> errorResponse(HttpStatus status, Exception e) {
-        return new ResponseEntity<>(new ApiErrorResponse(status, e), status);
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handleAccessDenied(AccessDeniedException e) {
-        return errorResponse(HttpStatus.FORBIDDEN, e);
+        return new ApiErrorResponse(HttpStatus.FORBIDDEN, e).toResponseEntity();
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> handeBadCredentials(BadCredentialsException e) {
-        return errorResponse(HttpStatus.FORBIDDEN, e);
+    public ResponseEntity<?> handleBadCredentials(BadCredentialsException e) {
+        return new ApiErrorResponse(HttpStatus.FORBIDDEN, e).toResponseEntity();
     }
 
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<?> handleConflict(ConflictException e) {
-        return errorResponse(HttpStatus.CONFLICT, e);
+        return new ApiErrorResponse(HttpStatus.CONFLICT, e).toResponseEntity();
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<?> handleNotFound(NotFoundException e) {
+        return new ApiErrorResponse(HttpStatus.NOT_FOUND, e).toResponseEntity();
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGenericError(Exception e) {
-        return errorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+        return new ApiErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e).toResponseEntity();
     }
 
     @Override

@@ -1,6 +1,13 @@
 package ru.itis.other.project.util.exceptions;
 
-public class ConflictException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+/**
+ * Generates {@code 409 CONFLICT} error response.
+ */
+@ResponseStatus(HttpStatus.CONFLICT)
+public abstract class ConflictException extends RuntimeException {
 
     public ConflictException(String message) {
         super(message);

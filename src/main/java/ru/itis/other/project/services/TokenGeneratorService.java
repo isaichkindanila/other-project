@@ -2,5 +2,7 @@ package ru.itis.other.project.services;
 
 public interface TokenGeneratorService {
 
-    String generateToken(int length);
+    String generateStringToken(int length);
+
+    byte[] generateRawToken(int length);
 }

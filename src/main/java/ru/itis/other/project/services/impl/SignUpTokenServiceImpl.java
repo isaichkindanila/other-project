@@ -14,7 +14,7 @@ import ru.itis.other.project.util.exceptions.TokenNotFoundException;
 
 @Service
 @RequiredArgsConstructor
-public class SignUpTokenServiceImpl implements SignUpTokenService {
+class SignUpTokenServiceImpl implements SignUpTokenService {
 
     private final UserRepository userRepository;
     private final SignUpTokenRepository tokenRepository;
@@ -26,7 +26,7 @@ public class SignUpTokenServiceImpl implements SignUpTokenService {
     @Override
     public SignUpTokenDto createTokenFor(User user) {
         var token = tokenRepository.save(SignUpToken.builder()
-                .token(generatorService.generateToken(tokenLength))
+                .token(generatorService.generateStringToken(tokenLength))
                 .user(user)
                 .state(SignUpToken.State.NOT_USED)
                 .build());

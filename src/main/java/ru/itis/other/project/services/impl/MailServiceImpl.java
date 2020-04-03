@@ -12,7 +12,7 @@ import java.util.concurrent.Executor;
 
 @Service
 @AllArgsConstructor
-public class MailServiceImpl implements MailService {
+class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
     private final Executor executor;

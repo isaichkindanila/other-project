@@ -7,13 +7,13 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 @Component
-public class TokenGeneratorServiceImpl implements TokenGeneratorService {
+class TokenGeneratorServiceImpl implements TokenGeneratorService {
 
     private final Base64.Encoder encoder = Base64.getUrlEncoder();
     private final SecureRandom random = new SecureRandom();
 
     @Override
-    public String generateToken(int length) {
+    public String generateStringToken(int length) {
         var bytes = (length % 4 == 0)
                 ? new byte[3 * length / 4]
                 : new byte[3 * (1 + length / 4)];
@@ -22,5 +22,13 @@ public class TokenGeneratorServiceImpl implements TokenGeneratorService {
         var token = encoder.encodeToString(bytes);
 
         return token.substring(0, length);
+    }
+
+    @Override
+    public byte[] generateRawToken(int length) {
+        var bytes = new byte[length];
+        random.nextBytes(bytes);
+
+        return bytes;
     }
 }

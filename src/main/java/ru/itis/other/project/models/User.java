@@ -1,15 +1,13 @@
 package ru.itis.other.project.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "app_user")
 @Data
+@ToString(exclude = "passHash")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

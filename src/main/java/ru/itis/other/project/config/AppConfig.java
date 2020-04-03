@@ -4,6 +4,10 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import freemarker.template.Configuration;
 import lombok.AllArgsConstructor;
+import org.springframework.aop.Advisor;
+import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
@@ -94,5 +98,29 @@ public class AppConfig {
         sender.setPassword(env.getRequiredProperty("mail.password"));
 
         return sender;
+    }
+
+    @Bean
+    @SuppressWarnings("ConstantConditions")
+    public CustomizableTraceInterceptor customizableTraceInterceptor() {
+        var interceptor = new CustomizableTraceInterceptor();
+        var logStackTrace = Boolean.parseBoolean(env.getProperty("logging.interceptor.logStackTrace"));
+
+        interceptor.setUseDynamicLogger(true);
+        interceptor.setLogExceptionStackTrace(logStackTrace);
+
+        interceptor.setEnterMessage(env.getProperty("logging.interceptor.enter"));
+        interceptor.setExitMessage(env.getProperty("logging.interceptor.exit"));
+        interceptor.setExceptionMessage(env.getProperty("logging.interceptor.exception"));
+
+        return interceptor;
+    }
+
+    @Bean
+    public Advisor serviceLoggingAdvisor() {
+        var pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression("execution(public * ru.itis.other.project.services.*Service.*(..)) && !@annotation(ru.itis.other.project.util.DoNotLog)");
+
+        return new DefaultPointcutAdvisor(pointcut, customizableTraceInterceptor());
     }
 }

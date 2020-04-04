@@ -9,7 +9,7 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.services.EncryptionService;
-import ru.itis.other.project.util.DoNotLog;
+import ru.itis.other.project.util.annotations.NotLoggable;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -41,13 +41,13 @@ class EncryptionServiceImpl implements EncryptionService {
     }
 
     @Override
-    @DoNotLog
+    @NotLoggable
     public OutputStream encrypt(OutputStream out, byte[] key, byte[] iv) {
         return new CipherOutputStream(out, createCipher(key, iv));
     }
 
     @Override
-    @DoNotLog
+    @NotLoggable
     public InputStream decrypt(InputStream in, byte[] key, byte[] iv) {
         return new CipherInputStream(in, createCipher(key, iv));
     }

@@ -1,5 +1,7 @@
 package ru.itis.other.project.services;
 
+import ru.itis.other.project.util.annotations.NotLoggable;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -22,6 +24,7 @@ public interface EncryptionService {
      * @return encrypted {@code OutputStream}
      * @throws IllegalArgumentException if {@code key} or {@code iv} is wrong size
      */
+    @NotLoggable
     OutputStream encrypt(OutputStream out, byte[] key, byte[] iv);
 
     /**
@@ -33,5 +36,6 @@ public interface EncryptionService {
      * @return decrypted {@code InputStream}
      * @throws IllegalArgumentException if {@code key} or {@code iv} is wrong size
      */
+    @NotLoggable
     InputStream decrypt(InputStream in, byte[] key, byte[] iv);
 }

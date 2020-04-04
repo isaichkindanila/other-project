@@ -19,6 +19,11 @@ class UserRepositoryJpaImpl implements UserRepository {
     private EntityManager entityManager;
 
     @Override
+    public Optional<User> findById(Long id) {
+        return Optional.ofNullable(entityManager.find(User.class, id));
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         var query = entityManager.createQuery(FIND_EMAIL, User.class);
         query.setParameter("email", email);

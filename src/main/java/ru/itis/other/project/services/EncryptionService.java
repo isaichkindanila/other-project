@@ -1,9 +1,9 @@
 package ru.itis.other.project.services;
 
+import ru.itis.other.project.util.annotations.DoNotLog;
 import ru.itis.other.project.util.annotations.NotLoggable;
 
 import java.io.InputStream;
-import java.io.OutputStream;
 
 public interface EncryptionService {
 
@@ -13,19 +13,19 @@ public interface EncryptionService {
      * @param string string to be hashed
      * @return hex string of the hash
      */
-    String hash(String string);
+    String hash(@DoNotLog String string);
 
     /**
-     * Encrypts given {@code OutputStream}.
+     * Encrypts given {@code InputStream}.
      *
-     * @param out {@code OutputStream} to encrypt
+     * @param in  {@code InputStream} to encrypt
      * @param key secret key, 32 bytes
      * @param iv  initialization vector, 12 bytes
-     * @return encrypted {@code OutputStream}
+     * @return encrypted {@code InputStream}
      * @throws IllegalArgumentException if {@code key} or {@code iv} is wrong size
      */
     @NotLoggable
-    OutputStream encrypt(OutputStream out, byte[] key, byte[] iv);
+    InputStream encrypt(InputStream in, byte[] key, byte[] iv);
 
     /**
      * Decrypts given {@code InputStream}.

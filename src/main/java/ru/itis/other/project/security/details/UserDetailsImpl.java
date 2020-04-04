@@ -1,6 +1,8 @@
 package ru.itis.other.project.security.details;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.itis.other.project.models.User;
@@ -10,21 +12,32 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Getter
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(exclude = "passHash")
 public class UserDetailsImpl implements UserDetails, UserInfo {
 
+    private final User user;
     private final Long id;
     private final String email;
     private final String passHash;
     private final User.State state;
 
+    @Builder
+    public UserDetailsImpl(Long id, String email, User.State state) {
+        this.user = null;
+        this.passHash = null;
+
+        this.id = id;
+        this.email = email;
+        this.state = state;
+    }
+
     public UserDetailsImpl(User user) {
-        id = user.getId();
-        state = user.getState();
-        email = user.getEmail();
-        passHash = user.getPassHash();
+        this.user = user;
+
+        this.id = null;
+        this.email = null;
+        this.passHash = null;
+        this.state = null;
     }
 
     @Override
@@ -34,12 +47,12 @@ public class UserDetailsImpl implements UserDetails, UserInfo {
 
     @Override
     public String getUsername() {
-        return email;
+        return (user == null) ? email : user.getEmail();
     }
 
     @Override
     public String getPassword() {
-        return passHash;
+        return (user == null) ? null : user.getPassHash();
     }
 
     @Override
@@ -59,6 +72,6 @@ public class UserDetailsImpl implements UserDetails, UserInfo {
 
     @Override
     public boolean isEnabled() {
-        return state == User.State.OK;
+        return ((user == null) ? state : user.getState()) == User.State.OK;
     }
 }

@@ -1,12 +1,12 @@
 package ru.itis.other.project.services;
 
-import org.springframework.web.multipart.MultipartFile;
 import ru.itis.other.project.dto.FileDto;
-import ru.itis.other.project.util.annotations.DoNotLog;
+import ru.itis.other.project.dto.LoadFileDto;
+import ru.itis.other.project.dto.UploadFileDto;
 
 public interface FileService {
 
-    void save(String token, @DoNotLog String key, MultipartFile file);
+    void save(UploadFileDto dto);
 
-    FileDto load(String token, @DoNotLog String key);
+    FileDto load(LoadFileDto dto);
 }

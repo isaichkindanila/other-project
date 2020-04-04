@@ -3,6 +3,7 @@ package ru.itis.other.project.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.SignUpTokenDto;
 import ru.itis.other.project.models.SignUpToken;
 import ru.itis.other.project.models.User;
@@ -24,6 +25,7 @@ class SignUpTokenServiceImpl implements SignUpTokenService {
     private int tokenLength;
 
     @Override
+    @Transactional
     public SignUpTokenDto createTokenFor(User user) {
         var token = tokenRepository.save(SignUpToken.builder()
                 .token(generatorService.generateStringToken(tokenLength))
@@ -35,6 +37,7 @@ class SignUpTokenServiceImpl implements SignUpTokenService {
     }
 
     @Override
+    @Transactional
     public boolean confirm(String token) {
         var signUpToken = tokenRepository.find(token).orElseThrow(
                 () -> new TokenNotFoundException(token)

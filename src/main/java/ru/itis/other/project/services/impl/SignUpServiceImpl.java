@@ -3,6 +3,7 @@ package ru.itis.other.project.services.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.SignUpDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.repositories.UserRepository;
@@ -19,6 +20,7 @@ class SignUpServiceImpl implements SignUpService {
     private final SignUpTokenService tokenService;
 
     @Override
+    @Transactional
     public void signUp(SignUpDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException(dto.getEmail());

@@ -1,7 +1,6 @@
 package ru.itis.other.project.repositories.impl;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.repositories.UserRepository;
 
@@ -11,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Repository
-@Transactional
 class UserRepositoryJpaImpl implements UserRepository {
 
     private static final String FIND_EMAIL =

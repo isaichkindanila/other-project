@@ -12,4 +12,6 @@ public interface StorageService {
     StorageEntity find(String token) throws EntityNotFoundException;
 
     TokenListDto getTokenList(StorageEntity entity);
+
+    String generateToken();
 }

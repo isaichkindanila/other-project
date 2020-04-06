@@ -4,29 +4,28 @@
 <@H.html>
     <@H.head "Loading...">
         <script src="/static/js/forge-sha256.min.js"></script>
+        <script src="/static/js/generateKey.js"></script>
     </@H.head>
     <@H.body>
         <script>
             const tokenList = [<#list tokens as token>"${token}",</#list>];
-            const token = "${token}";
 
-            let key = localStorage.getItem("key");
+            const key = generateKey(tokenList);
+            const form = new HTMLFormElement();
 
-            if (key === null) {
-                fetch("/signOut", {"method": "POST"});
-            } else {
-                for (let i = 0; i < tokenList.length; i++) {
-                    key = forge_sha256(key + tokenList[i]);
-                }
+            form.action = "/files/${token}";
+            form.method = "post";
 
-                fetch("/files/" + token, {
-                    "method": "POST",
-                    "headers": {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    "body": "token=${token}&key=" + key
-                })
-            }
+            const tokenInput = new HTMLInputElement();
+            tokenInput.name = "token";
+            tokenInput.value = "${token}";
+
+            const keyInput = new HTMLInputElement();
+            keyInput.name = "key";
+            keyInput.value = key;
+
+            form.append(tokenInput, keyInput);
+            form.submit();
         </script>
     </@H.body>
 </@H.html>

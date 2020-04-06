@@ -4,7 +4,7 @@
 <@H.html>
     <@H.head "Sign up">
         <script src="/static/js/forge-sha256.min.js"></script>
-        <script src="/static/js/key.js"></script>
+        <script src="/static/js/createKey.js"></script>
     </@H.head>
     <@H.body>
         <h1 id="error">

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.itis.other.project.dto.LoadFileDto;
 import ru.itis.other.project.dto.UploadFileDto;
 import ru.itis.other.project.services.FileService;
+import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -37,10 +38,14 @@ public class FileController {
 
     @GetMapping("/{token}")
     public String getDownloadPage(@PathVariable String token, ModelMap map) {
-        map.put("tokens", fileService.getTokenList(token));
-        map.put("token", token);
+        try {
+            map.put("tokens", fileService.getTokenList(token));
+            map.put("token", token);
 
-        return "load_file";
+            return "load_file";
+        } catch (WrongEntityTypeException e) {
+            return "redirect:/storage/" + token;
+        }
     }
 
     @PostMapping("/{token}")

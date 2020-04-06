@@ -19,9 +19,6 @@ public class FileInfo {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
     private String mimeType;
 
     @Column(nullable = false)

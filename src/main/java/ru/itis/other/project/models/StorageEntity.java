@@ -24,6 +24,9 @@ public class StorageEntity {
     @Column(nullable = false, length = 64)
     private String signature;
 
+    @Column(nullable = false)
+    private String name;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -35,4 +38,8 @@ public class StorageEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private FileInfo fileInfo;
+
+    public enum Type {
+        FILE, DIRECTORY
+    }
 }

@@ -28,7 +28,7 @@ class SignUpTokenServiceImpl implements SignUpTokenService {
     @Transactional
     public SignUpTokenDto createTokenFor(User user) {
         var token = tokenRepository.save(SignUpToken.builder()
-                .token(generatorService.generateStringToken(tokenLength))
+                .token(generatorService.generateBase64Token(tokenLength))
                 .user(user)
                 .state(SignUpToken.State.NOT_USED)
                 .build());

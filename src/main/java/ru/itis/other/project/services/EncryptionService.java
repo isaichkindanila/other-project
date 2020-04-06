@@ -16,6 +16,11 @@ public interface EncryptionService {
     String hash(@DoNotLog String string);
 
     /**
+     * @return hash-signature of key and token
+     */
+    String signature(String token, @DoNotLog String key);
+
+    /**
      * Encrypts given {@code InputStream}.
      *
      * @param in  {@code InputStream} to encrypt
@@ -28,6 +33,18 @@ public interface EncryptionService {
     InputStream encrypt(InputStream in, byte[] key, byte[] iv);
 
     /**
+     * Encrypts given {@code InputStream}.
+     *
+     * @param in  {@code InputStream} to encrypt
+     * @param key secret key, 32 bytes encoded in hex format
+     * @param iv  initialization vector, 12 bytes encoded in hex format
+     * @return encrypted {@code InputStream}
+     * @throws IllegalArgumentException if {@code key} or {@code iv} is wrong size or not in hex format
+     */
+    @NotLoggable
+    InputStream encrypt(InputStream in, String key, String iv);
+
+    /**
      * Decrypts given {@code InputStream}.
      *
      * @param in  {@code InputStream} to encrypt
@@ -38,4 +55,16 @@ public interface EncryptionService {
      */
     @NotLoggable
     InputStream decrypt(InputStream in, byte[] key, byte[] iv);
+
+    /**
+     * Decrypts given {@code InputStream}.
+     *
+     * @param in  {@code InputStream} to encrypt
+     * @param key secret key, 32 bytes encoded in hex format
+     * @param iv  initialization vector, 12 bytes encoded in hex format
+     * @return decrypted {@code InputStream}
+     * @throws IllegalArgumentException if {@code key} or {@code iv} is wrong size or not in hex format
+     */
+    @NotLoggable
+    InputStream decrypt(InputStream in, String key, String iv);
 }

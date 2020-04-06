@@ -1,23 +1,41 @@
 package ru.itis.other.project.services.impl;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.bouncycastle.crypto.StreamCipher;
+import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.engines.ChaCha7539Engine;
 import org.bouncycastle.crypto.io.CipherInputStream;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+import org.bouncycastle.util.encoders.DecoderException;
+import org.bouncycastle.util.encoders.Hex;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.services.EncryptionService;
 import ru.itis.other.project.util.annotations.NotLoggable;
+import ru.itis.other.project.util.exceptions.BadRequestException;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @Service
 class EncryptionServiceImpl implements EncryptionService {
 
     @Override
     public String hash(String string) {
-        return DigestUtils.sha256Hex(string);
+        var digest = new SHA256Digest();
+
+        var result = new byte[32];
+        var input = string.getBytes(StandardCharsets.UTF_8);
+
+        digest.update(input, 0, input.length);
+        digest.doFinal(result, 0);
+
+        return Hex.toHexString(result);
+    }
+
+    @Override
+    public String signature(String token, String key) {
+        return hash(token + key);
     }
 
     private StreamCipher createCipher(byte[] key, byte[] iv) {
@@ -48,5 +66,42 @@ class EncryptionServiceImpl implements EncryptionService {
     @NotLoggable
     public InputStream decrypt(InputStream in, byte[] key, byte[] iv) {
         return new CipherInputStream(in, createCipher(key, iv));
+    }
+
+    private byte[] hexToBytes(String hex, String name, int expectedBytesLength) {
+        try {
+            var bytes = Hex.decode(hex);
+
+            if (bytes.length != expectedBytesLength) {
+                var data = Map.of(
+                        "expected", expectedBytesLength,
+                        "actual", bytes.length
+                );
+
+                throw new BadRequestException(name + " is not correct length", data);
+            }
+
+            return bytes;
+        } catch (DecoderException e) {
+            throw new BadRequestException(name + " is not a hex string");
+        }
+    }
+
+    @Override
+    @NotLoggable
+    public InputStream encrypt(InputStream in, String key, String iv) {
+        var keyBytes = hexToBytes(key, "key", 32);
+        var ivBytes = hexToBytes(iv, "iv", 12);
+
+        return encrypt(in, keyBytes, ivBytes);
+    }
+
+    @Override
+    @NotLoggable
+    public InputStream decrypt(InputStream in, String key, String iv) {
+        var keyBytes = hexToBytes(key, "key", 32);
+        var ivBytes = hexToBytes(iv, "iv", 12);
+
+        return encrypt(in, keyBytes, ivBytes);
     }
 }

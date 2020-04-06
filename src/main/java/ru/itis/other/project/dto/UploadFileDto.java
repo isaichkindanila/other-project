@@ -14,5 +14,5 @@ public class UploadFileDto {
     private String fileToken;
     private String parentToken;
     private String key;
-    private MultipartFile multipartFile;
+    private MultipartFile file;
 }

@@ -13,5 +13,5 @@ public interface DirectoryService {
      */
     DirectoryDto get(@Nullable String token) throws WrongEntityTypeException;
 
-    void create(CreateDirectoryDto dto);
+    void create(@Nullable String parentToken, CreateDirectoryDto dto);
 }

@@ -1,14 +1,10 @@
 function signOut() {
-    const form = new HTMLFormElement();
+    const form = document.createElement("form");
 
     form.action = "/signOut";
     form.method = "post";
 
-    form.submit();
-}
-
-if (localStorage.getItem("key") === null) {
-    signOut();
+    document.body.appendChild(form).submit();
 }
 
 function generateKey(tokenList) {

@@ -102,6 +102,26 @@ class EncryptionServiceImpl implements EncryptionService {
         var keyBytes = hexToBytes(key, "key", 32);
         var ivBytes = hexToBytes(iv, "iv", 12);
 
-        return encrypt(in, keyBytes, ivBytes);
+        return decrypt(in, keyBytes, ivBytes);
+    }
+
+    @Override
+    @NotLoggable
+    public boolean isValidIV(String iv) {
+        try {
+            return Hex.decode(iv).length == 12;
+        } catch (DecoderException e) {
+            return false;
+        }
+    }
+
+    @Override
+    @NotLoggable
+    public boolean isValidKey(String key) {
+        try {
+            return Hex.decode(key).length == 32;
+        } catch (DecoderException e) {
+            return false;
+        }
     }
 }

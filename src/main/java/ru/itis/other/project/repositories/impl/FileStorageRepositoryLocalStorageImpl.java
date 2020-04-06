@@ -16,7 +16,7 @@ public class FileStorageRepositoryLocalStorageImpl implements FileStorageReposit
     private final File storage;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public FileStorageRepositoryLocalStorageImpl(@Value("@{storage.path}") String storagePath) {
+    public FileStorageRepositoryLocalStorageImpl(@Value("${storage.path}") String storagePath) {
         storage = new File(storagePath);
         storage.mkdirs();
     }

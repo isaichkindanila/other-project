@@ -1,12 +1,14 @@
 package ru.itis.other.project.services;
 
+import org.springframework.lang.Nullable;
 import org.springframework.security.access.AccessDeniedException;
-import ru.itis.other.project.dto.TokenListDto;
 import ru.itis.other.project.models.StorageEntity;
 import ru.itis.other.project.util.annotations.DoNotLog;
 import ru.itis.other.project.util.exceptions.EntityNotFoundException;
 import ru.itis.other.project.util.exceptions.InvalidKeyException;
 import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
+
+import java.util.List;
 
 public interface StorageService {
 
@@ -41,7 +43,27 @@ public interface StorageService {
      */
     StorageEntity findAndCheckSignature(String token, StorageEntity.Type type, @DoNotLog String key);
 
-    TokenListDto getTokenList(StorageEntity entity);
+    /**
+     * Finds parent by token. If {@code token} is null, then parent is assumed to be "root".
+     *
+     * @param token parent's token (can be null if parent is "root")
+     * @return entity with matching token (or null if {@code token == null})
+     * @throws EntityNotFoundException  if token entity is not found
+     * @throws AccessDeniedException    if token entity belongs to a different user
+     * @throws WrongEntityTypeException if token entity is not a directory
+     */
+    @Nullable
+    StorageEntity findParentByToken(@Nullable String token);
+
+    /**
+     * Checks token and key, then computes signature and persists given {@code entity}.
+     */
+    StorageEntity save(@DoNotLog String key, StorageEntity entity);
+
+    /**
+     * This method <b>MUST</b> be called in the same transaction where {@code entity} was extracted.
+     */
+    List<String> getTokenList(StorageEntity entity);
 
     String generateToken();
 }

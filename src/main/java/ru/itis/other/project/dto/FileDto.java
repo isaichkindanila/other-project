@@ -1,12 +1,10 @@
 package ru.itis.other.project.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.core.io.Resource;
 
 @Data
+@ToString(exclude = "resource")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

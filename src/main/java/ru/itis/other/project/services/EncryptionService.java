@@ -67,4 +67,16 @@ public interface EncryptionService {
      */
     @NotLoggable
     InputStream decrypt(InputStream in, String key, String iv);
+
+    /**
+     * Checks if given {@code String} is valid IV (hex string with length of 24).
+     */
+    @NotLoggable
+    boolean isValidIV(String iv);
+
+    /**
+     * Checks if given {@code String} is valid key (hex string with length of 64).
+     */
+    @NotLoggable
+    boolean isValidKey(String key);
 }

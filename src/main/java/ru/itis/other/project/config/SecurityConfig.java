@@ -87,6 +87,8 @@ public class SecurityConfig {
             http.logout()
                     .logoutUrl("/signOut")
                     .permitAll();
+
+            http.csrf().ignoringAntMatchers("/signOut");
         }
 
         @Override

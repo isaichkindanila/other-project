@@ -4,7 +4,15 @@ import java.util.Map;
 
 public class WrongEntityTypeException extends BadRequestException {
 
-    public WrongEntityTypeException(String expected, String actual) {
+    public static WrongEntityTypeException expectedFile() {
+        return new WrongEntityTypeException("file", "directory");
+    }
+
+    public static WrongEntityTypeException expectedDirectory() {
+        return new WrongEntityTypeException("directory", "file");
+    }
+
+    private WrongEntityTypeException(String expected, String actual) {
         super("wrong entity type", Map.of("expected", expected, "actual", actual));
     }
 }

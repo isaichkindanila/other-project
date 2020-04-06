@@ -1,6 +1,7 @@
 package ru.itis.other.project.controllers.general;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,13 @@ public class StorageController {
     private final DirectoryService directoryService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public String getRoot(ModelMap map) {
         return getDirectory(null, map);
     }
 
     @GetMapping("/{token}")
+    @PreAuthorize("isAuthenticated()")
     public String getDirectory(@PathVariable String token, ModelMap map) {
         try {
             map.put("dir", directoryService.get(token));
@@ -39,13 +42,16 @@ public class StorageController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public String createRootDirectory(CreateDirectoryDto dto) {
         return createDirectory(null, dto);
     }
 
     @PostMapping("/{token}")
+    @PreAuthorize("isAuthenticated()")
     public String createDirectory(@PathVariable String token, CreateDirectoryDto dto) {
-        directoryService.create(dto);
+        directoryService.create(token, dto);
+
         return "redirect:/storage" + ((token == null) ? "" : ("/" + token));
     }
 }

@@ -1,16 +1,15 @@
 package ru.itis.other.project.controllers.general;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.server.ResponseStatusException;
 import ru.itis.other.project.dto.LoadFileDto;
 import ru.itis.other.project.dto.UploadFileDto;
 import ru.itis.other.project.services.FileService;
@@ -26,7 +25,16 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public String upload(UploadFileDto dto) {
+        if (dto.getFile().getOriginalFilename() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "file name is missing");
+        }
+
+        if (dto.getFile().getSize() == 0L) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "file is empty");
+        }
+
         fileService.save(dto);
 
         if (dto.getParentToken() == null) {
@@ -37,6 +45,7 @@ public class FileController {
     }
 
     @GetMapping("/{token}")
+    @PreAuthorize("isAuthenticated()")
     public String getDownloadPage(@PathVariable String token, ModelMap map) {
         try {
             map.put("tokens", fileService.getTokenList(token));
@@ -49,6 +58,7 @@ public class FileController {
     }
 
     @PostMapping("/{token}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> download(@PathVariable String token, LoadFileDto dto) {
         if (!token.equals(dto.getToken())) {
             return ResponseEntity.badRequest().build();

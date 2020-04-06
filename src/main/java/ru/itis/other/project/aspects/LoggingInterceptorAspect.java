@@ -87,9 +87,9 @@ public class LoggingInterceptorAspect {
             long elapsed = System.currentTimeMillis() - start;
 
             if (logStackTrace) {
-                log.trace(invocationSignature + " ERR (" + elapsed + " ms)" + t.toString(), t);
+                log.trace(invocationSignature + " ERR (" + elapsed + " ms): " + t.toString(), t);
             } else {
-                log.trace(invocationSignature + " ERR (" + elapsed + " ms)" + t.toString());
+                log.trace(invocationSignature + " ERR (" + elapsed + " ms): " + t.toString());
             }
 
             throw t;

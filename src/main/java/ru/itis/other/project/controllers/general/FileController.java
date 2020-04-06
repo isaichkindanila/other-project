@@ -24,21 +24,22 @@ public class FileController {
 
     private final FileService fileService;
 
-    @GetMapping
-    public String fileList(ModelMap modelMap) {
-        // TODO: find user's files
-        return "files";
-    }
-
     @PostMapping
     public String upload(UploadFileDto dto) {
         fileService.save(dto);
-        return "redirect:/files";
+
+        if (dto.getParentToken() == null) {
+            return "redirect:/storage";
+        } else {
+            return "redirect:/storage/" + dto.getParentToken();
+        }
     }
 
     @GetMapping("/{token}")
     public String getDownloadPage(@PathVariable String token, ModelMap map) {
-        // TODO: a lot of stuff
+        map.put("tokens", fileService.getTokenList(token));
+        map.put("token", token);
+
         return "load_file";
     }
 

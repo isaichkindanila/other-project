@@ -5,10 +5,12 @@ import lombok.SneakyThrows;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.FileDto;
 import ru.itis.other.project.dto.LoadFileDto;
+import ru.itis.other.project.dto.TokenListDto;
 import ru.itis.other.project.dto.UploadFileDto;
 import ru.itis.other.project.models.FileInfo;
 import ru.itis.other.project.models.StorageEntity;
@@ -18,13 +20,15 @@ import ru.itis.other.project.repositories.StorageEntityRepository;
 import ru.itis.other.project.services.AuthService;
 import ru.itis.other.project.services.EncryptionService;
 import ru.itis.other.project.services.FileService;
+import ru.itis.other.project.services.StorageService;
+import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
 
-@SuppressWarnings("Convert2MethodRef")
 @Service
 @AllArgsConstructor
 class FileServiceImpl implements FileService {
 
     private final AuthService authService;
+    private final StorageService storageService;
     private final EncryptionService encryptionService;
 
     private final FileInfoRepository fileInfoRepository;
@@ -63,13 +67,10 @@ class FileServiceImpl implements FileService {
         if (dto.getParentToken() == null) {
             parent = null;
         } else {
-            // TODO: throw 'parent not found' exception
-            parent = storageEntityRepository.findByToken(dto.getParentToken())
-                    .orElseThrow(() -> new RuntimeException());
+            parent = storageService.find(dto.getParentToken());
 
             if (parent.getFileInfo() != null) {
-                // TODO: throw 'not a directory' exception
-                throw new RuntimeException();
+                throw new WrongEntityTypeException("directory", "file");
             }
         }
 
@@ -96,22 +97,20 @@ class FileServiceImpl implements FileService {
     @Override
     @Transactional
     public FileDto load(LoadFileDto dto) {
-        // TODO: throw 'entity not found' exception
-        var storageEntity = storageEntityRepository.findByToken(dto.getToken())
-                .orElseThrow(() -> new RuntimeException());
+        var storageEntity = storageService.find(dto.getToken());
 
         if (!storageEntity.getUser().getId().equals(authService.getUser().getId())) {
-            // TODO: throw 'access denied' exception
-            throw new RuntimeException();
+            throw new AccessDeniedException("it's not yours >:(");
         }
 
         var info = storageEntity.getFileInfo();
+
         if (info == null) {
-            // TODO: throw 'not a file' exception
-            throw new RuntimeException();
+            throw new WrongEntityTypeException("file", "directory");
         }
 
         var signature = getSignature(dto.getToken(), dto.getKey());
+
         if (!signature.equals(storageEntity.getSignature())) {
             // TODO: throw 'invalid key' exception
             throw new RuntimeException();
@@ -129,5 +128,20 @@ class FileServiceImpl implements FileService {
                 .name(info.getName())
                 .resource(new InputStreamResource(decrypted))
                 .build();
+    }
+
+    @Override
+    public TokenListDto getTokenList(String token) {
+        var entity = storageService.find(token);
+
+        if (!entity.getUser().getId().equals(authService.getUser().getId())) {
+            throw new AccessDeniedException("it's not yours >:(");
+        }
+
+        if (entity.getFileInfo() != null) {
+            throw new WrongEntityTypeException("file", "directory");
+        }
+
+        return storageService.getTokenList(entity);
     }
 }

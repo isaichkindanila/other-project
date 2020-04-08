@@ -4,6 +4,8 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import ru.itis.other.project.util.ApiErrorResponse;
 
+import java.util.Map;
+
 @Getter
 public abstract class ResponseException extends RuntimeException {
 
@@ -17,7 +19,7 @@ public abstract class ResponseException extends RuntimeException {
     }
 
     public ResponseException(HttpStatus status, String message) {
-        this(status, message, new Object());
+        this(status, message, Map.of());
     }
 
     public ApiErrorResponse toApiErrorResponse() {

@@ -5,6 +5,8 @@ import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
 @Getter
 @ToString
 public class ApiErrorResponse {
@@ -20,7 +22,7 @@ public class ApiErrorResponse {
     }
 
     public ApiErrorResponse(HttpStatus status, String reason) {
-        this(status, reason, new Object());
+        this(status, reason, Map.of());
     }
 
     public ResponseEntity<ApiErrorResponse> toResponseEntity() {

@@ -61,12 +61,12 @@ class FileServiceImpl implements FileService {
 
     @Override
     @Transactional
-    public FileDto load(LoadFileDto dto) {
-        var entity = storageService.findAndCheckSignature(dto.getToken(), StorageEntity.Type.FILE, dto.getKey());
+    public FileDto load(String token, LoadFileDto dto) {
+        var entity = storageService.findAndCheckSignature(token, StorageEntity.Type.FILE, dto.getKey());
         var info = entity.getFileInfo();
 
-        var input = fileStorageRepository.load(dto.getToken());
-        var decrypted = encryptionService.decrypt(input, dto.getKey(), dto.getToken());
+        var input = fileStorageRepository.load(token);
+        var decrypted = encryptionService.decrypt(input, dto.getKey(), token);
 
         return FileDto.builder()
                 .length(info.getSize())

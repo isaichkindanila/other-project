@@ -14,7 +14,7 @@ public interface FileService {
     /**
      * @throws WrongEntityTypeException if entity is 'directory', not 'file'
      */
-    FileDto load(LoadFileDto dto) throws WrongEntityTypeException;
+    FileDto load(String token, LoadFileDto dto) throws WrongEntityTypeException;
 
     /**
      * @throws WrongEntityTypeException if entity is 'directory', not 'file'

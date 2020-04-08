@@ -10,6 +10,5 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoadFileDto {
-    private String token;
     private String key;
 }

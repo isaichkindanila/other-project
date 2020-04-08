@@ -60,11 +60,7 @@ public class FileController {
     @PostMapping("/{token}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> download(@PathVariable String token, LoadFileDto dto) {
-        if (!token.equals(dto.getToken())) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        var file = fileService.load(dto);
+        var file = fileService.load(token, dto);
 
         var headers = new HttpHeaders();
         headers.setContentDisposition(ContentDisposition.builder("inline")

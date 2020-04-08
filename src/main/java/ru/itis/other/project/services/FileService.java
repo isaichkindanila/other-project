@@ -1,6 +1,7 @@
 package ru.itis.other.project.services;
 
 import ru.itis.other.project.dto.FileDto;
+import ru.itis.other.project.dto.FullFileInfoDto;
 import ru.itis.other.project.dto.LoadFileDto;
 import ru.itis.other.project.dto.UploadFileDto;
 import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
@@ -15,6 +16,11 @@ public interface FileService {
      * @throws WrongEntityTypeException if entity is 'directory', not 'file'
      */
     FileDto load(String token, LoadFileDto dto) throws WrongEntityTypeException;
+
+    /**
+     * @throws WrongEntityTypeException if entity is 'directory', not 'file'
+     */
+    FullFileInfoDto getInfo(String token);
 
     /**
      * @throws WrongEntityTypeException if entity is 'directory', not 'file'

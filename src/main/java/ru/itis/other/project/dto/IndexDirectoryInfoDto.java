@@ -8,11 +8,11 @@ import ru.itis.other.project.models.StorageEntity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DirectoryInfoDto {
+public class IndexDirectoryInfoDto {
     String name;
     String token;
 
-    public static DirectoryInfoDto from(StorageEntity directory) {
-        return new DirectoryInfoDto(directory.getName(), directory.getToken());
+    public static IndexDirectoryInfoDto from(StorageEntity directory) {
+        return new IndexDirectoryInfoDto(directory.getName(), directory.getToken());
     }
 }

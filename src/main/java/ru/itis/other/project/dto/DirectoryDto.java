@@ -14,9 +14,9 @@ import java.util.List;
 public class DirectoryDto {
     private List<String> tokenList;
 
-    private DirectoryInfoDto self;
-    private DirectoryInfoDto parent;
+    private IndexDirectoryInfoDto self;
+    private IndexDirectoryInfoDto parent;
 
-    private List<FileInfoDto> files;
-    private List<DirectoryInfoDto> directories;
+    private List<IndexFileInfoDto> files;
+    private List<IndexDirectoryInfoDto> directories;
 }

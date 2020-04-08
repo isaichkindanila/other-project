@@ -10,13 +10,13 @@ import ru.itis.other.project.models.StorageEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileInfoDto {
+public class IndexFileInfoDto {
     private String name;
     private String token;
     private long size;
 
-    public static FileInfoDto from(StorageEntity file) {
-        return FileInfoDto.builder()
+    public static IndexFileInfoDto from(StorageEntity file) {
+        return IndexFileInfoDto.builder()
                 .name(file.getName())
                 .token(file.getToken())
                 .size(file.getFileInfo().getSize())

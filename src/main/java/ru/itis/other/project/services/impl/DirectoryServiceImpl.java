@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.CreateDirectoryDto;
 import ru.itis.other.project.dto.DirectoryDto;
-import ru.itis.other.project.dto.DirectoryInfoDto;
-import ru.itis.other.project.dto.FileInfoDto;
+import ru.itis.other.project.dto.IndexDirectoryInfoDto;
+import ru.itis.other.project.dto.IndexFileInfoDto;
 import ru.itis.other.project.models.StorageEntity;
 import ru.itis.other.project.repositories.StorageEntityRepository;
 import ru.itis.other.project.services.AuthService;
@@ -28,17 +28,17 @@ public class DirectoryServiceImpl implements DirectoryService {
 
     private final StorageEntityRepository entityRepository;
 
-    private Pair<List<DirectoryInfoDto>, List<FileInfoDto>> findByParent(@Nullable StorageEntity parent) {
+    private Pair<List<IndexDirectoryInfoDto>, List<IndexFileInfoDto>> findByParent(@Nullable StorageEntity parent) {
         var children = entityRepository.findByParentAndUser(parent, authService.getUser());
 
-        var dirs = new ArrayList<DirectoryInfoDto>();
-        var files = new ArrayList<FileInfoDto>();
+        var dirs = new ArrayList<IndexDirectoryInfoDto>();
+        var files = new ArrayList<IndexFileInfoDto>();
 
         for (var child : children) {
             if (child.getFileInfo() == null) {
-                dirs.add(DirectoryInfoDto.from(child));
+                dirs.add(IndexDirectoryInfoDto.from(child));
             } else {
-                files.add(FileInfoDto.from(child));
+                files.add(IndexFileInfoDto.from(child));
             }
         }
 
@@ -62,8 +62,8 @@ public class DirectoryServiceImpl implements DirectoryService {
             var directory = storageService.findAndCheck(token, StorageEntity.Type.DIRECTORY);
             var parent = directory.getParent();
 
-            var selfDto = DirectoryInfoDto.from(directory);
-            var parentDto = (parent == null) ? null : DirectoryInfoDto.from(parent);
+            var selfDto = IndexDirectoryInfoDto.from(directory);
+            var parentDto = (parent == null) ? null : IndexDirectoryInfoDto.from(parent);
 
             var dirsAndFiles = findByParent(directory);
 

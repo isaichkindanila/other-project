@@ -6,6 +6,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.FileDto;
+import ru.itis.other.project.dto.FullFileInfoDto;
 import ru.itis.other.project.dto.LoadFileDto;
 import ru.itis.other.project.dto.UploadFileDto;
 import ru.itis.other.project.models.FileInfo;
@@ -73,6 +74,20 @@ class FileServiceImpl implements FileService {
                 .mimeType(info.getMimeType())
                 .name(entity.getName())
                 .resource(new InputStreamResource(decrypted))
+                .build();
+    }
+
+    @Override
+    public FullFileInfoDto getInfo(String token) {
+        var entity = storageService.findAndCheck(token, StorageEntity.Type.FILE);
+        var info = entity.getFileInfo();
+
+        return FullFileInfoDto.builder()
+                .name(entity.getName())
+                .token(entity.getToken())
+                .size(info.getSize())
+                .mimeType(info.getMimeType())
+                .tokens(storageService.getTokenList(entity))
                 .build();
     }
 

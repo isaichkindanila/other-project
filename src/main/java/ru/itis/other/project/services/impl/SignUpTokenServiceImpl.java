@@ -7,8 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.SignUpTokenDto;
 import ru.itis.other.project.models.SignUpToken;
 import ru.itis.other.project.models.User;
+import ru.itis.other.project.models.UserInfo;
 import ru.itis.other.project.repositories.SignUpTokenRepository;
-import ru.itis.other.project.repositories.UserRepository;
+import ru.itis.other.project.repositories.UserInfoRepository;
 import ru.itis.other.project.services.SignUpTokenService;
 import ru.itis.other.project.services.TokenGeneratorService;
 import ru.itis.other.project.util.exceptions.TokenNotFoundException;
@@ -17,7 +18,7 @@ import ru.itis.other.project.util.exceptions.TokenNotFoundException;
 @RequiredArgsConstructor
 class SignUpTokenServiceImpl implements SignUpTokenService {
 
-    private final UserRepository userRepository;
+    private final UserInfoRepository infoRepository;
     private final SignUpTokenRepository tokenRepository;
     private final TokenGeneratorService generatorService;
 
@@ -28,7 +29,7 @@ class SignUpTokenServiceImpl implements SignUpTokenService {
     @Transactional
     public SignUpTokenDto createTokenFor(User user) {
         var token = tokenRepository.save(SignUpToken.builder()
-                .token(generatorService.generateBase64Token(tokenLength))
+                .token(generatorService.base64UrlEncodedToken(tokenLength))
                 .user(user)
                 .state(SignUpToken.State.NOT_USED)
                 .build());
@@ -43,22 +44,19 @@ class SignUpTokenServiceImpl implements SignUpTokenService {
                 () -> new TokenNotFoundException(token)
         );
 
-        if (signUpToken.getState() == SignUpToken.State.NOT_USED) {
-            var user = signUpToken.getUser();
-
-            if (user.getState() != User.State.NOT_CONFIRMED) {
-                return false;
-            }
-
-            user.setState(User.State.OK);
-            userRepository.save(user);
-
-            signUpToken.setState(SignUpToken.State.USED);
-            tokenRepository.save(signUpToken);
-
-            return true;
-        } else {
+        if (signUpToken.getState() == SignUpToken.State.USED) {
             return false;
         }
+
+        var user = signUpToken.getUser();
+        var info = infoRepository.findByUser(user);
+
+        info.setState(UserInfo.State.OK);
+        infoRepository.save(info);
+
+        signUpToken.setState(SignUpToken.State.USED);
+        tokenRepository.save(signUpToken);
+
+        return true;
     }
 }

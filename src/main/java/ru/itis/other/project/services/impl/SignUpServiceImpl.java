@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.SignUpDto;
 import ru.itis.other.project.models.User;
+import ru.itis.other.project.models.UserInfo;
+import ru.itis.other.project.repositories.UserInfoRepository;
 import ru.itis.other.project.repositories.UserRepository;
 import ru.itis.other.project.services.SignUpService;
 import ru.itis.other.project.services.SignUpTokenService;
@@ -16,6 +18,8 @@ import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
 class SignUpServiceImpl implements SignUpService {
 
     private final UserRepository userRepository;
+    private final UserInfoRepository infoRepository;
+
     private final PasswordEncoder passwordEncoder;
     private final SignUpTokenService tokenService;
 
@@ -28,8 +32,12 @@ class SignUpServiceImpl implements SignUpService {
 
         var user = userRepository.save(User.builder()
                 .email(dto.getEmail())
+                .build());
+
+        infoRepository.save(UserInfo.builder()
+                .user(user)
                 .passHash(passwordEncoder.encode(dto.getPassword()))
-                .state(User.State.NOT_CONFIRMED)
+                .state(UserInfo.State.NOT_CONFIRMED)
                 .build());
 
         tokenService.createTokenFor(user);

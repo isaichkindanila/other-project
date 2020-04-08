@@ -1,39 +1,33 @@
 package ru.itis.other.project.security.details;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.ToString;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.itis.other.project.models.User;
-import ru.itis.other.project.util.UserInfo;
+import ru.itis.other.project.models.UserInfo;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public class UserDetailsImpl implements UserDetails, UserInfo {
+@ToString
+public class UserDetailsImpl implements UserDetails {
 
-    @Getter
-    private final User user;
+    private final @NonNull User user;
+    private final @Nullable UserInfo info;
 
-    private final Long id;
-    private final String email;
-    private final User.State state;
-
-    @Builder
-    private UserDetailsImpl(Long id, String email, User.State state) {
-        this.user = null;
-
-        this.id = id;
-        this.email = email;
-        this.state = state;
+    public UserDetailsImpl(User user, UserInfo info) {
+        this.user = user;
+        this.info = info;
     }
 
     public UserDetailsImpl(User user) {
-        this.user = user;
+        this(user, null);
+    }
 
-        this.id = null;
-        this.email = null;
-        this.state = null;
+    public UserDetailsImpl(Long id, String email) {
+        this(new User(id, email));
     }
 
     @Override
@@ -43,12 +37,12 @@ public class UserDetailsImpl implements UserDetails, UserInfo {
 
     @Override
     public String getUsername() {
-        return (user == null) ? email : user.getEmail();
+        return user.getEmail();
     }
 
     @Override
     public String getPassword() {
-        return (user == null) ? null : user.getPassHash();
+        return (info == null) ? null : info.getPassHash();
     }
 
     @Override
@@ -68,21 +62,15 @@ public class UserDetailsImpl implements UserDetails, UserInfo {
 
     @Override
     public boolean isEnabled() {
-        return ((user == null) ? state : user.getState()) == User.State.OK;
+        if (info == null) {
+            return true;
+        } else {
+            return info.getState() == UserInfo.State.OK;
+        }
     }
 
-    @Override
-    public Long getId() {
-        return (user == null) ? id : user.getId();
-    }
-
-    @Override
-    public String getEmail() {
-        return (user == null) ? email : user.getEmail();
-    }
-
-    @Override
-    public String toString() {
-        return "UserDetailsImpl(id=" + getId() + ", email=" + getEmail() + ")";
+    @NonNull
+    public User getUser() {
+        return user;
     }
 }

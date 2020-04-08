@@ -39,10 +39,10 @@ class StorageServiceImpl implements StorageService {
     public StorageEntity findAndCheck(String token, StorageEntity.Type type) {
         var entity = find(token);
 
-        var userId = authService.getUserInfo().getId();
-        var ownerId = entity.getUser().getId();
+        var user = authService.getUser();
+        var owner = entity.getUser();
 
-        if (!userId.equals(ownerId)) {
+        if (!user.equals(owner)) {
             throw new AccessDeniedException("it's not yours >:(");
         }
 
@@ -119,6 +119,6 @@ class StorageServiceImpl implements StorageService {
 
     @Override
     public String generateToken() {
-        return tokenGeneratorService.generateHexToken(12);
+        return tokenGeneratorService.hexEncodedToken(12);
     }
 }

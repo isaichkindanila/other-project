@@ -38,11 +38,10 @@ class JwtServiceImpl implements JwtService {
         try {
             var jwt = verifier.verify(token);
 
-            return UserDetailsImpl.builder()
-                    .id(Long.parseLong(jwt.getSubject()))
-                    .email(jwt.getClaim("email").asString())
-                    .state(User.State.OK)
-                    .build();
+            var id = Long.parseLong(jwt.getSubject());
+            var email = jwt.getClaim("email").asString();
+
+            return new UserDetailsImpl(id, email);
         } catch (Exception e) {
             throw new BadCredentialsException("bad token");
         }

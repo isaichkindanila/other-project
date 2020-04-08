@@ -1,10 +1,10 @@
 package ru.itis.other.project.services;
 
+import org.springframework.security.access.AccessDeniedException;
 import ru.itis.other.project.models.User;
-import ru.itis.other.project.util.UserInfo;
 
 /**
- * Utility service for extracting {@code User} and {@code UserInfo} objects from current {@link org.springframework.security.core.Authentication}.
+ * Utility service for extracting {@link User} from current {@link org.springframework.security.core.Authentication}.
  */
 public interface AuthService {
 
@@ -14,15 +14,10 @@ public interface AuthService {
     boolean isAuthenticated();
 
     /**
-     * @return {@code UserInfo} associated with current request
-     * @throws IllegalStateException if current request is not authenticated
-     */
-    UserInfo getUserInfo();
-
-    /**
-     * Loads user from database based on {@code UserInfo}.
+     * Extracts currently authenticated user from {@link org.springframework.security.core.Authentication}.
+     *
      * @return currently authenticated {@code User}
-     * @throws IllegalStateException if current request is not authenticated
+     * @throws AccessDeniedException if current request is not authenticated
      */
     User getUser();
 }

@@ -1,13 +1,15 @@
 package ru.itis.other.project.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "app_user")
 @Data
-@ToString(exclude = "passHash")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,15 +20,4 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
-    private String passHash;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private State state;
-
-    public enum State {
-        NOT_CONFIRMED, OK
-    }
 }

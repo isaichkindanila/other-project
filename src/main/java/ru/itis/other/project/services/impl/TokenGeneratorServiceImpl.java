@@ -2,7 +2,7 @@ package ru.itis.other.project.services.impl;
 
 import org.bouncycastle.util.encoders.Hex;
 import org.springframework.stereotype.Component;
-import ru.itis.other.project.services.TokenGeneratorService;
+import ru.itis.other.project.services.interfaces.TokenGeneratorService;
 
 import java.security.SecureRandom;
 import java.util.Base64;

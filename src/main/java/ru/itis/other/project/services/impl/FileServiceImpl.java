@@ -11,12 +11,12 @@ import ru.itis.other.project.dto.storage.LoadFileDto;
 import ru.itis.other.project.dto.storage.UploadFileDto;
 import ru.itis.other.project.models.FileInfo;
 import ru.itis.other.project.models.StorageEntity;
-import ru.itis.other.project.repositories.FileInfoRepository;
-import ru.itis.other.project.repositories.FileStorageRepository;
-import ru.itis.other.project.services.AuthService;
-import ru.itis.other.project.services.EncryptionService;
-import ru.itis.other.project.services.FileService;
-import ru.itis.other.project.services.StorageService;
+import ru.itis.other.project.repositories.interfaces.FileInfoRepository;
+import ru.itis.other.project.repositories.interfaces.FileStorageRepository;
+import ru.itis.other.project.services.interfaces.AuthService;
+import ru.itis.other.project.services.interfaces.EncryptionService;
+import ru.itis.other.project.services.interfaces.FileService;
+import ru.itis.other.project.services.interfaces.StorageService;
 
 import java.util.List;
 

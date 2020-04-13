@@ -2,7 +2,7 @@ package ru.itis.other.project.repositories.impl;
 
 import org.springframework.stereotype.Repository;
 import ru.itis.other.project.models.ChatMessage;
-import ru.itis.other.project.repositories.ChatMessageRepository;
+import ru.itis.other.project.repositories.interfaces.ChatMessageRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

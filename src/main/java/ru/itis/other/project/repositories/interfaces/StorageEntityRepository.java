@@ -1,4 +1,4 @@
-package ru.itis.other.project.repositories;
+package ru.itis.other.project.repositories.interfaces;
 
 import org.springframework.lang.Nullable;
 import ru.itis.other.project.models.StorageEntity;

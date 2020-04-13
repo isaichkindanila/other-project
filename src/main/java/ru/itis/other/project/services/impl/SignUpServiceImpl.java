@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.dto.auth.SignUpDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.models.UserInfo;
-import ru.itis.other.project.repositories.UserInfoRepository;
-import ru.itis.other.project.repositories.UserRepository;
-import ru.itis.other.project.services.SignUpService;
-import ru.itis.other.project.services.SignUpTokenService;
+import ru.itis.other.project.repositories.interfaces.UserInfoRepository;
+import ru.itis.other.project.repositories.interfaces.UserRepository;
+import ru.itis.other.project.services.interfaces.SignUpService;
+import ru.itis.other.project.services.interfaces.SignUpTokenService;
 import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;
 
 @Service

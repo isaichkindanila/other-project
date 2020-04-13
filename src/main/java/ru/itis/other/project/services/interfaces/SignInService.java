@@ -1,4 +1,4 @@
-package ru.itis.other.project.services;
+package ru.itis.other.project.services.interfaces;
 
 import org.springframework.security.access.AccessDeniedException;
 import ru.itis.other.project.dto.auth.SignInDto;

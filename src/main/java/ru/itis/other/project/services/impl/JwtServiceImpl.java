@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import ru.itis.other.project.dto.auth.JwtDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.security.details.UserDetailsImpl;
-import ru.itis.other.project.services.JwtService;
+import ru.itis.other.project.services.interfaces.JwtService;
 
 @Service
 class JwtServiceImpl implements JwtService {

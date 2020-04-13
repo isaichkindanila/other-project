@@ -33,7 +33,7 @@ public class LoggingInterceptorAspect {
         return true;
     }
 
-    @Around("execution(public * ru.itis.other.project.services.*.*(..)) && !@annotation(ru.itis.other.project.util.annotations.NotLoggable)")
+    @Around("execution(public * ru.itis.other.project.services.interfaces.*.*(..)) && !@annotation(ru.itis.other.project.util.annotations.NotLoggable)")
     public Object intercept(ProceedingJoinPoint pjp) throws Throwable {
         // if trace is disabled there is no point in logging anything
         if (!log.isTraceEnabled()) {

@@ -1,4 +1,4 @@
-package ru.itis.other.project.services;
+package ru.itis.other.project.services.interfaces;
 
 import ru.itis.other.project.dto.auth.SignUpDto;
 import ru.itis.other.project.util.exceptions.EmailAlreadyTakenException;

@@ -2,7 +2,7 @@ package ru.itis.other.project.repositories.impl;
 
 import org.springframework.stereotype.Repository;
 import ru.itis.other.project.models.User;
-import ru.itis.other.project.repositories.UserRepository;
+import ru.itis.other.project.repositories.interfaces.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

@@ -3,7 +3,7 @@ package ru.itis.other.project.repositories.impl;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import ru.itis.other.project.repositories.FileStorageRepository;
+import ru.itis.other.project.repositories.interfaces.FileStorageRepository;
 
 import java.io.File;
 import java.io.FileInputStream;

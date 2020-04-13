@@ -9,7 +9,7 @@ import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.bouncycastle.util.encoders.DecoderException;
 import org.bouncycastle.util.encoders.Hex;
 import org.springframework.stereotype.Service;
-import ru.itis.other.project.services.EncryptionService;
+import ru.itis.other.project.services.interfaces.EncryptionService;
 import ru.itis.other.project.util.annotations.NotLoggable;
 import ru.itis.other.project.util.exceptions.BadRequestException;
 

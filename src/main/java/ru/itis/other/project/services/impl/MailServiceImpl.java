@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import ru.itis.other.project.services.MailService;
+import ru.itis.other.project.services.interfaces.MailService;
 
 import java.util.concurrent.Executor;
 

@@ -10,10 +10,10 @@ import ru.itis.other.project.dto.storage.DirectoryDto;
 import ru.itis.other.project.dto.storage.IndexDirectoryInfoDto;
 import ru.itis.other.project.dto.storage.IndexFileInfoDto;
 import ru.itis.other.project.models.StorageEntity;
-import ru.itis.other.project.repositories.StorageEntityRepository;
-import ru.itis.other.project.services.AuthService;
-import ru.itis.other.project.services.DirectoryService;
-import ru.itis.other.project.services.StorageService;
+import ru.itis.other.project.repositories.interfaces.StorageEntityRepository;
+import ru.itis.other.project.services.interfaces.AuthService;
+import ru.itis.other.project.services.interfaces.DirectoryService;
+import ru.itis.other.project.services.interfaces.StorageService;
 import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
 
 import java.util.ArrayList;

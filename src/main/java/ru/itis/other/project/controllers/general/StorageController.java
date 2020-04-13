@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.itis.other.project.dto.storage.CreateDirectoryDto;
-import ru.itis.other.project.services.DirectoryService;
-import ru.itis.other.project.services.StorageService;
+import ru.itis.other.project.services.interfaces.DirectoryService;
+import ru.itis.other.project.services.interfaces.StorageService;
 import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
 
 @Controller

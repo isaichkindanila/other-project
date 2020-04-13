@@ -1,4 +1,4 @@
-package ru.itis.other.project.repositories;
+package ru.itis.other.project.repositories.interfaces;
 
 import java.io.InputStream;
 

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.other.project.dto.auth.JwtDto;
 import ru.itis.other.project.dto.auth.SignInDto;
-import ru.itis.other.project.services.JwtService;
-import ru.itis.other.project.services.SignInService;
+import ru.itis.other.project.services.interfaces.JwtService;
+import ru.itis.other.project.services.interfaces.SignInService;
 
 @RestController
 @RequestMapping("/api/signIn")

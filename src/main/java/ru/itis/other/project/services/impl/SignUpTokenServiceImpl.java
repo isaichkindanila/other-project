@@ -8,10 +8,10 @@ import ru.itis.other.project.dto.auth.SignUpTokenDto;
 import ru.itis.other.project.models.SignUpToken;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.models.UserInfo;
-import ru.itis.other.project.repositories.SignUpTokenRepository;
-import ru.itis.other.project.repositories.UserInfoRepository;
-import ru.itis.other.project.services.SignUpTokenService;
-import ru.itis.other.project.services.TokenGeneratorService;
+import ru.itis.other.project.repositories.interfaces.SignUpTokenRepository;
+import ru.itis.other.project.repositories.interfaces.UserInfoRepository;
+import ru.itis.other.project.services.interfaces.SignUpTokenService;
+import ru.itis.other.project.services.interfaces.TokenGeneratorService;
 import ru.itis.other.project.util.exceptions.TokenNotFoundException;
 
 @Service

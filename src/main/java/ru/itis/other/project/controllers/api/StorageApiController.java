@@ -6,8 +6,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.other.project.dto.storage.CreateDirectoryDto;
 import ru.itis.other.project.dto.storage.DirectoryDto;
-import ru.itis.other.project.services.DirectoryService;
-import ru.itis.other.project.services.StorageService;
+import ru.itis.other.project.services.interfaces.DirectoryService;
+import ru.itis.other.project.services.interfaces.StorageService;
 
 import java.net.URI;
 import java.util.Map;

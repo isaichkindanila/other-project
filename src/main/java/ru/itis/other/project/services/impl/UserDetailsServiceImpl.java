@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.other.project.repositories.UserInfoRepository;
-import ru.itis.other.project.repositories.UserRepository;
+import ru.itis.other.project.repositories.interfaces.UserInfoRepository;
+import ru.itis.other.project.repositories.interfaces.UserRepository;
 import ru.itis.other.project.security.details.UserDetailsImpl;
 
 @Service

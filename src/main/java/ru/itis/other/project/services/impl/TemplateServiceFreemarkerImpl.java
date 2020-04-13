@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import ru.itis.other.project.services.TemplateService;
+import ru.itis.other.project.services.interfaces.TemplateService;
 
 import java.util.Map;
 

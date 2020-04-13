@@ -7,9 +7,9 @@ import org.springframework.web.context.request.async.DeferredResult;
 import ru.itis.other.project.dto.chat.MessageDto;
 import ru.itis.other.project.dto.chat.MessagesDto;
 import ru.itis.other.project.models.ChatMessage;
-import ru.itis.other.project.repositories.ChatMessageRepository;
-import ru.itis.other.project.services.AuthService;
-import ru.itis.other.project.services.ChatService;
+import ru.itis.other.project.repositories.interfaces.ChatMessageRepository;
+import ru.itis.other.project.services.interfaces.AuthService;
+import ru.itis.other.project.services.interfaces.ChatService;
 
 import java.util.LinkedList;
 import java.util.List;

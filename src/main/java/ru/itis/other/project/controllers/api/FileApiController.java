@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.itis.other.project.dto.storage.FullFileInfoDto;
 import ru.itis.other.project.dto.storage.LoadFileDto;
 import ru.itis.other.project.dto.storage.UploadFileDto;
-import ru.itis.other.project.services.FileService;
+import ru.itis.other.project.services.interfaces.FileService;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;

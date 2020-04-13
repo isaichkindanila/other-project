@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.other.project.dto.auth.SignUpDto;
 import ru.itis.other.project.dto.auth.SignUpTokenDto;
-import ru.itis.other.project.services.SignUpService;
-import ru.itis.other.project.services.SignUpTokenService;
+import ru.itis.other.project.services.interfaces.SignUpService;
+import ru.itis.other.project.services.interfaces.SignUpTokenService;
 import ru.itis.other.project.util.ApiErrorResponse;
 
 @RestController

@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.security.details.UserDetailsImpl;
-import ru.itis.other.project.services.AuthService;
+import ru.itis.other.project.services.interfaces.AuthService;
 
 @Service
 class AuthServiceImpl implements AuthService {

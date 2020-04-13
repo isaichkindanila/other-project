@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.itis.other.project.dto.auth.SignUpTokenDto;
 import ru.itis.other.project.models.User;
-import ru.itis.other.project.services.MailService;
-import ru.itis.other.project.services.TemplateService;
+import ru.itis.other.project.services.interfaces.MailService;
+import ru.itis.other.project.services.interfaces.TemplateService;
 
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class SignUpConfirmEmailAspect {
     private String serverURL;
 
     @AfterReturning(
-            pointcut = "execution(* ru.itis.other.project.services.SignUpTokenService.createTokenFor(..)) && args(user)",
+            pointcut = "execution(* ru.itis.other.project.services.interfaces.SignUpTokenService.createTokenFor(..)) && args(user)",
             returning = "token",
             argNames = "token,user"
     )

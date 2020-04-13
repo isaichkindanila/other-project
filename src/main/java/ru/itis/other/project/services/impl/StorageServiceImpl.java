@@ -6,11 +6,11 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.other.project.models.StorageEntity;
-import ru.itis.other.project.repositories.StorageEntityRepository;
-import ru.itis.other.project.services.AuthService;
-import ru.itis.other.project.services.EncryptionService;
-import ru.itis.other.project.services.StorageService;
-import ru.itis.other.project.services.TokenGeneratorService;
+import ru.itis.other.project.repositories.interfaces.StorageEntityRepository;
+import ru.itis.other.project.services.interfaces.AuthService;
+import ru.itis.other.project.services.interfaces.EncryptionService;
+import ru.itis.other.project.services.interfaces.StorageService;
+import ru.itis.other.project.services.interfaces.TokenGeneratorService;
 import ru.itis.other.project.util.exceptions.*;
 
 import java.util.LinkedList;

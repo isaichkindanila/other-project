@@ -1,4 +1,4 @@
-package ru.itis.other.project.services;
+package ru.itis.other.project.services.interfaces;
 
 import org.springframework.web.context.request.async.DeferredResult;
 import ru.itis.other.project.dto.chat.MessagesDto;

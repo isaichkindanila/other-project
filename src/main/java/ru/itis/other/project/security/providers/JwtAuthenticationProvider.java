@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import ru.itis.other.project.security.authentication.JwtAuthentication;
-import ru.itis.other.project.services.JwtService;
+import ru.itis.other.project.services.interfaces.JwtService;
 
 @Component("jwtAuthProvider")
 @AllArgsConstructor

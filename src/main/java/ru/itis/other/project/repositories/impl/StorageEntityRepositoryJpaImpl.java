@@ -4,7 +4,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import ru.itis.other.project.models.StorageEntity;
 import ru.itis.other.project.models.User;
-import ru.itis.other.project.repositories.StorageEntityRepository;
+import ru.itis.other.project.repositories.interfaces.StorageEntityRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

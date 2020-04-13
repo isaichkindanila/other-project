@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import ru.itis.other.project.dto.storage.LoadFileDto;
 import ru.itis.other.project.dto.storage.UploadFileDto;
-import ru.itis.other.project.services.FileService;
+import ru.itis.other.project.services.interfaces.FileService;
 import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
 
 import java.nio.charset.StandardCharsets;

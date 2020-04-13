@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import ru.itis.other.project.dto.chat.MessagesDto;
-import ru.itis.other.project.services.ChatService;
+import ru.itis.other.project.services.interfaces.ChatService;
 
 @Controller
 @RequestMapping("/chat")

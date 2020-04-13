@@ -9,7 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.models.UserInfo;
-import ru.itis.other.project.repositories.UserInfoRepository;
+import ru.itis.other.project.repositories.interfaces.UserInfoRepository;
 
 import java.util.Objects;
 

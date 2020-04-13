@@ -1,4 +1,4 @@
-package ru.itis.other.project.dto;
+package ru.itis.other.project.dto.storage;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,10 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@ToString(exclude = "password")
+@ToString(exclude = "key")
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpDto {
-    private String email;
-    private String password;
+public class LoadFileDto {
+    private String key;
 }

@@ -1,8 +1,8 @@
 package ru.itis.other.project.services;
 
 import org.springframework.lang.Nullable;
-import ru.itis.other.project.dto.CreateDirectoryDto;
-import ru.itis.other.project.dto.DirectoryDto;
+import ru.itis.other.project.dto.storage.CreateDirectoryDto;
+import ru.itis.other.project.dto.storage.DirectoryDto;
 import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
 
 public interface DirectoryService {

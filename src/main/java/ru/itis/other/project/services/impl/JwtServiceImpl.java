@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.itis.other.project.dto.JwtDto;
+import ru.itis.other.project.dto.auth.JwtDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.security.details.UserDetailsImpl;
 import ru.itis.other.project.services.JwtService;

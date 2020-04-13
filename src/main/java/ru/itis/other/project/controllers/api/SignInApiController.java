@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.itis.other.project.dto.JwtDto;
-import ru.itis.other.project.dto.SignInDto;
+import ru.itis.other.project.dto.auth.JwtDto;
+import ru.itis.other.project.dto.auth.SignInDto;
 import ru.itis.other.project.services.JwtService;
 import ru.itis.other.project.services.SignInService;
 

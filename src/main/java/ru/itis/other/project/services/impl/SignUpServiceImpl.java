@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.other.project.dto.SignUpDto;
+import ru.itis.other.project.dto.auth.SignUpDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.models.UserInfo;
 import ru.itis.other.project.repositories.UserInfoRepository;

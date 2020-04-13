@@ -1,4 +1,4 @@
-package ru.itis.other.project.dto;
+package ru.itis.other.project.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

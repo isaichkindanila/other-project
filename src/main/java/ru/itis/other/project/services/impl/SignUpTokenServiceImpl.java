@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.other.project.dto.SignUpTokenDto;
+import ru.itis.other.project.dto.auth.SignUpTokenDto;
 import ru.itis.other.project.models.SignUpToken;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.models.UserInfo;

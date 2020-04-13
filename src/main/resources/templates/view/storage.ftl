@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="dir" type="ru.itis.other.project.dto.DirectoryDto" -->
+<#-- @ftlvariable name="dir" type="ru.itis.other.project.dto.storage.DirectoryDto" -->
 <#-- @ftlvariable name="dirToken" type="java.lang.String" -->
 <#-- @ftlvariable name="fileToken" type="java.lang.String" -->
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->

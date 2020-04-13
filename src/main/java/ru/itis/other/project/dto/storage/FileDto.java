@@ -1,4 +1,4 @@
-package ru.itis.other.project.dto;
+package ru.itis.other.project.dto.storage;
 
 import lombok.*;
 import org.springframework.core.io.Resource;

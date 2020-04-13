@@ -1,6 +1,6 @@
 package ru.itis.other.project.services;
 
-import ru.itis.other.project.dto.SignUpTokenDto;
+import ru.itis.other.project.dto.auth.SignUpTokenDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.util.exceptions.TokenNotFoundException;
 

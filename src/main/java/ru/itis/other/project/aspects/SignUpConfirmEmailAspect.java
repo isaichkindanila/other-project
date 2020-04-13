@@ -5,7 +5,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.itis.other.project.dto.SignUpTokenDto;
+import ru.itis.other.project.dto.auth.SignUpTokenDto;
 import ru.itis.other.project.models.User;
 import ru.itis.other.project.services.MailService;
 import ru.itis.other.project.services.TemplateService;

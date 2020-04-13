@@ -1,9 +1,9 @@
 package ru.itis.other.project.services;
 
-import ru.itis.other.project.dto.FileDto;
-import ru.itis.other.project.dto.FullFileInfoDto;
-import ru.itis.other.project.dto.LoadFileDto;
-import ru.itis.other.project.dto.UploadFileDto;
+import ru.itis.other.project.dto.storage.FileDto;
+import ru.itis.other.project.dto.storage.FullFileInfoDto;
+import ru.itis.other.project.dto.storage.LoadFileDto;
+import ru.itis.other.project.dto.storage.UploadFileDto;
 import ru.itis.other.project.util.exceptions.WrongEntityTypeException;
 
 import java.util.List;

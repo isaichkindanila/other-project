@@ -1,6 +1,7 @@
 package ru.itis.other.project.controllers.api;
 
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 public class FileApiController {
 
     private final FileService fileService;
+    private final RepresentationModelAssembler<FullFileInfoDto, FullFileInfoDto> assembler;
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
@@ -33,7 +35,7 @@ public class FileApiController {
     @GetMapping("/{token}")
     @PreAuthorize("isAuthenticated()")
     public FullFileInfoDto getInfo(@PathVariable String token) {
-        return fileService.getInfo(token);
+        return assembler.toModel(fileService.getInfo(token));
     }
 
     @PostMapping("/{token}")

@@ -1,25 +1,23 @@
 package ru.itis.other.project.dto.storage;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 import ru.itis.other.project.models.StorageEntity;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class IndexFileInfoDto {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class IndexFileInfoDto extends RepresentationModel<IndexFileInfoDto> {
     private String name;
     private String token;
-    private long size;
 
     public static IndexFileInfoDto from(StorageEntity file) {
         return IndexFileInfoDto.builder()
                 .name(file.getName())
                 .token(file.getToken())
-                .size(file.getFileInfo().getSize())
                 .build();
     }
 }

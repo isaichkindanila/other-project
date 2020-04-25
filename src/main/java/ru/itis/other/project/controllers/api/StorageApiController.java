@@ -1,6 +1,7 @@
 package ru.itis.other.project.controllers.api;
 
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,8 @@ public class StorageApiController {
     private final StorageService storageService;
     private final DirectoryService directoryService;
 
+    private final RepresentationModelAssembler<DirectoryDto, DirectoryDto> assembler;
+
     @GetMapping("/token")
     @PreAuthorize("permitAll()")
     public Map<String, String> generateToken() {
@@ -35,7 +38,7 @@ public class StorageApiController {
     @GetMapping("/{token}")
     @PreAuthorize("isAuthenticated()")
     public DirectoryDto getDirectory(@PathVariable String token) {
-        return directoryService.get(token);
+        return assembler.toModel(directoryService.get(token));
     }
 
     @PostMapping

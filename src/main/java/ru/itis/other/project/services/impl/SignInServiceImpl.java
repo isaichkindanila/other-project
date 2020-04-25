@@ -25,9 +25,8 @@ class SignInServiceImpl implements SignInService {
     @Override
     @Transactional
     public User signIn(SignInDto dto) throws AccessDeniedException {
-        var user = userRepository.findByEmail(dto.getEmail()).orElseThrow(
-                () -> new AccessDeniedException("bad credentials")
-        );
+        var user = userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new AccessDeniedException("bad credentials"));
 
         var info = infoRepository.findByUser(user);
 

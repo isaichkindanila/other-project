@@ -1,23 +1,24 @@
 <#-- @ftlvariable name="error" type="boolean" -->
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
 <#import "lib/html.ftl" as H>
+<#import "/spring.ftl" as spring>
 <@H.html>
-    <@H.head "Sign up">
+    <@H.head "page.signUp.title">
         <script src="/static/js/forge-sha256.min.js"></script>
         <script src="/static/js/createKey.js"></script>
     </@H.head>
     <@H.body>
         <h1 id="error">
             <#if error>
-                Email is already taken
+                <@spring.message "page.signUp.error"/>
             </#if>
         </h1>
         <form id="signUpForm" action="/signUp" method="post">
-            <input id="email" type="email" name="email" placeholder="email">
-            <input id="frontPassword" type="password" placeholder="password">
+            <input id="email" type="email" name="email" placeholder="<@spring.message "auth.email"/>">
+            <input id="frontPassword" type="password" placeholder="<@spring.message "auth.password"/>">
             <input id="password" type="hidden" name="password">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <input type="button" value="sign up" onclick="doSignUp()">
+            <input type="button" value="<@spring.message "page.signUp.form.button"/>" onclick="doSignUp()">
         </form>
 
         <script>
@@ -30,11 +31,11 @@
             function doSignUp() {
                 switch (true) {
                     case email.value.length === 0:
-                        error.innerHTML = "please enter email";
+                        error.innerHTML = "<@spring.message "auth.email.missing"/>";
                         break;
 
                     case frontPassword.value.length === 0:
-                        error.innerHTML = "please enter password";
+                        error.innerHTML = "<@spring.message "auth.password.missing"/>";
                         break;
 
                     default:

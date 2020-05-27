@@ -1,7 +1,8 @@
 <#import "lib/html.ftl" as H>
+<#import "/spring.ftl" as spring>
 <@H.html>
-    <@H.head "Signed up"/>
+    <@H.head "page.signedUp.title"/>
     <@H.body>
-        <h1>Signed up, confirm your email</h1>
+        <h1><@spring.message "page.signedUp.message"/></h1>
     </@H.body>
 </@H.html>

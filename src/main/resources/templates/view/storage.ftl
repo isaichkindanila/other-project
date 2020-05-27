@@ -3,9 +3,10 @@
 <#-- @ftlvariable name="fileToken" type="java.lang.String" -->
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
 <#import "lib/html.ftl" as H>
+<#import "/spring.ftl" as spring>
 <#assign isRoot = !(dir.self??)/>
 <@H.html>
-    <@H.head isRoot?then("Storage", dir.self.name)>
+    <@H.head "page.storage.title">
         <script src="/static/js/forge-sha256.min.js"></script>
         <script src="/static/js/generateKey.js"></script>
     </@H.head>
@@ -17,20 +18,20 @@
         </script>
 
         <form id="dirForm" action="/storage${isRoot?then("", "/" + dir.self.token)}" method="post">
-            <input type="text" name="name" placeholder="directory name">
+            <input type="text" name="name" placeholder="<@spring.message "page.storage.form.dir.name"/>">
             <input type="hidden" name="token" value="${dirToken}">
             <input type="hidden" name="key" value="">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <input type="button" value="create directory" onclick="doRequest(dirForm, dirTokens)">
+            <input type="button" value="<@spring.message "page.storage.form.dir.button"/>" onclick="doRequest(dirForm, dirTokens)">
         </form>
         <br>
         <form id="fileForm" action="/files" method="post" enctype="multipart/form-data">
-            <input type="file" name="file">
+            <input type="file" name="file" placeholder="<@spring.message "page.storage.form.file.choose"/>">
             <input type="hidden" name="fileToken" value="${fileToken}">
             <#if !isRoot><input type="hidden" name="parentToken" value="${dir.self.token}"></#if>
             <input type="hidden" name="key" value="">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <input type="button" value="upload file" onclick="doRequest(fileForm, fileTokens)">
+            <input type="button" value="<@spring.message "page.storage.form.file.button"/>" onclick="doRequest(fileForm, fileTokens)">
         </form>
         <hr>
         <#if !isRoot>

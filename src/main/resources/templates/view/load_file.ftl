@@ -2,8 +2,9 @@
 <#-- @ftlvariable name="token" type="java.lang.String" -->
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
 <#import "lib/html.ftl" as H>
+<#import "/spring.ftl" as spring>
 <@H.html>
-    <@H.head "Loading...">
+    <@H.head "page.loadFile.title">
         <script src="/static/js/forge-sha256.min.js"></script>
         <script src="/static/js/generateKey.js"></script>
     </@H.head>

@@ -64,7 +64,7 @@ public class AppConfig {
     public Configuration freemarkerConfiguration() {
         var configuration = new Configuration(Configuration.VERSION_2_3_29);
 
-        configuration.setClassForTemplateLoading(getClass(), "/templates");
+        configuration.setClassForTemplateLoading(getClass(), "/templates/");
         configuration.setDefaultEncoding("UTF-8");
 
         return configuration;

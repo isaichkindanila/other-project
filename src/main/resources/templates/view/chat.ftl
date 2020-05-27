@@ -1,10 +1,11 @@
 <#import "lib/html.ftl" as H>
+<#import "/spring.ftl" as spring>
 <@H.html>
-    <@H.head "Chat"/>
+    <@H.head "page.chat.title"/>
     <@H.body>
         <form>
-            <input id="msg" type="text" placeholder="message">
-            <input type="button" value="send" onclick="sendMessage()">
+            <input id="msg" type="text" placeholder="<@spring.message "page.chat.form.message"/>">
+            <input type="button" value="<@spring.message "page.chat.form.send"/>" onclick="sendMessage()">
         </form>
         <hr>
         <ul id="chat"></ul>
@@ -36,7 +37,6 @@
         let lastId = 0;
 
         function handle(data) {
-            <#--noinspection JSUnresolvedVariable-->
             lastId = data.lastId;
             const messages = data.messages;
 
@@ -52,7 +52,7 @@
             const request = new XMLHttpRequest();
             request.open("GET", "/chat/messages?after=" + lastId);
 
-            request.onreadystatechange = (e) => {
+            request.onreadystatechange = () => {
                 if (request.readyState !== 4) return;
 
                 if (request.status === 200) {

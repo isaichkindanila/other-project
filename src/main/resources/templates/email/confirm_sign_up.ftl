@@ -1,11 +1,13 @@
 <#-- @ftlvariable name="serverURL" type="java.lang.String" -->
 <#-- @ftlvariable name="token" type="java.lang.String" -->
+<#import "/spring.ftl" as spring>
 <html lang="en">
 <head>
-    <title>Confirm sign up</title>
+    <title><@spring.message "email.confirmSignUp.title"/></title>
 </head>
 <body>
-    <#--noinspection HtmlUnknownTarget-->
-    <a href="${serverURL}/signUp/confirm/${token}">Confirm sign up</a>
+    <a href="${serverURL}/signUp/confirm/${token}">
+        <@spring.message "email.confirmSignUp.message"/>
+    </a>
 </body>
 </html>

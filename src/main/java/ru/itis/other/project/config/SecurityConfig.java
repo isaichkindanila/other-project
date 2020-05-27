@@ -16,7 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.filter.GenericFilterBean;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +37,8 @@ public class SecurityConfig {
     @AllArgsConstructor
     public static class ApiConfig extends WebSecurityConfigurerAdapter {
 
-        private GenericFilterBean jwtAuthFilter;
-        private AuthenticationProvider jwtAuthProvider;
+        private final GenericFilterBean jwtAuthFilter;
+        private final AuthenticationProvider jwtAuthProvider;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -67,6 +71,16 @@ public class SecurityConfig {
 
         private final UserDetailsService userDetailsService;
         private final PasswordEncoder passwordEncoder;
+        private final DataSource dataSource;
+
+        @Bean
+        public PersistentTokenRepository persistentTokenRepository() {
+            var repository = new JdbcTokenRepositoryImpl();
+            repository.setDataSource(dataSource);
+
+            return repository;
+        }
+
 
         @Override
         public void configure(WebSecurity web) {
@@ -87,6 +101,10 @@ public class SecurityConfig {
             http.logout()
                     .logoutUrl("/signOut")
                     .permitAll();
+
+            http.rememberMe()
+                    .alwaysRemember(true)
+                    .tokenRepository(persistentTokenRepository());
 
             http.csrf().ignoringAntMatchers("/signOut", "/chat/**");
         }

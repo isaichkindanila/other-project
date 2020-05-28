@@ -10,6 +10,8 @@ import ru.itis.other.project.dto.auth.SignInDto;
 import ru.itis.other.project.services.interfaces.JwtService;
 import ru.itis.other.project.services.interfaces.SignInService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/signIn")
 @AllArgsConstructor
@@ -19,7 +21,7 @@ public class SignInApiController {
     private final JwtService jwtService;
 
     @PostMapping
-    public JwtDto signIn(@RequestBody SignInDto dto) {
+    public JwtDto signIn(@RequestBody @Valid SignInDto dto) {
         return jwtService.generateJWT(signInService.signIn(dto));
     }
 }

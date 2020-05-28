@@ -3,10 +3,10 @@ package ru.itis.other.project.controllers.general;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import ru.itis.other.project.dto.auth.SignInDto;
 import ru.itis.other.project.services.interfaces.AuthService;
 
 @Controller
@@ -18,13 +18,12 @@ public class SignInController {
 
     @GetMapping
     @PreAuthorize("permitAll()")
-    public String getSignInPage(@RequestParam(required = false) String error, ModelMap modelMap) {
+    public String getSignInPage(Model model) {
         if (authService.isAuthenticated()) {
             return "redirect:/home";
         }
 
-        modelMap.addAttribute("error", error != null);
-
+        model.addAttribute("form", new SignInDto());
         return "sign_in";
     }
 }

@@ -25,7 +25,7 @@ public class ApiErrorResponse {
         this(status, reason, Map.of());
     }
 
-    public ResponseEntity<ApiErrorResponse> toResponseEntity() {
+    public ResponseEntity<Object> toResponseEntity() {
         return ResponseEntity.status(status).body(this);
     }
 }

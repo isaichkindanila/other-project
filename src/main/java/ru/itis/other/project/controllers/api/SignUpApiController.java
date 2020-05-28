@@ -14,6 +14,8 @@ import ru.itis.other.project.services.interfaces.SignUpService;
 import ru.itis.other.project.services.interfaces.SignUpTokenService;
 import ru.itis.other.project.util.ApiErrorResponse;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/signUp")
 @AllArgsConstructor
@@ -24,7 +26,7 @@ public class SignUpApiController {
 
     @PostMapping
     @PreAuthorize("permitAll()")
-    public ResponseEntity<?> signUp(@RequestBody SignUpDto dto) {
+    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDto dto) {
         signUpService.signUp(dto);
 
         return new ResponseEntity<>(HttpStatus.OK);

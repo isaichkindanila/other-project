@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -54,6 +55,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
         resolver.setCookieName("locale");
 
         return resolver;
+    }
+
+    @Bean
+    public LocalValidatorFactoryBean localValidatorFactoryBean() {
+        var bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+
+        return bean;
     }
 
     @Override

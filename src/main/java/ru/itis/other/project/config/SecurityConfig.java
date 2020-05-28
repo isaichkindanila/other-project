@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.sql.DataSource;
@@ -99,7 +100,7 @@ public class SecurityConfig {
                     .permitAll();
 
             http.logout()
-                    .logoutUrl("/signOut")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                     .permitAll();
 
             http.rememberMe()

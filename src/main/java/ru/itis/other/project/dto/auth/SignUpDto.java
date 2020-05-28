@@ -5,11 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @ToString(exclude = "password")
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignUpDto {
+    @Email(message = "{validation.email}")
     private String email;
+
+    @NotEmpty(message = "{validation.password}")
     private String password;
 }
